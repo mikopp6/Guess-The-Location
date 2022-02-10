@@ -3,7 +3,7 @@ class DevelopmentConfig(object):
     DEBUG = True
     DEVELOPMENT = True
     SECRET_KEY = ""
-    SQLALCHEMY_DATABASE_URI = "postgresql:///gtl_dev"
+    SQLALCHEMY_DATABASE_URI = "postgresql://postgres:postgres@localhost:5432/gtl_dev"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 
