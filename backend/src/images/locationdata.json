@@ -1,14 +1,29 @@
 {
-	"locations": [
-		{
-			"image_path": "lighthouse.jpg",
-			"country_name": "Finland",
-			"town_name"	: "Oulu"
-		},
-		{
-			"image_path": "lighthouse2.jpg",
-			"country_name": "Finland2",
-			"town_name"	: "Oulu2"
-		},
-	]
+  "locations": [
+    {
+      "image_path": "lighthouse.jpg",
+      "country_name": "Finland",
+      "town_name": "Oulu"
+    },
+    {
+      "image_path": "buildings.jpg",
+      "country_name": "USA",
+      "town_name": "Massachusetts"
+    },
+    {
+      "image_path": "church.jpg",
+      "country_name": "Russian",
+      "town_name": "Moskova"
+    },
+    {
+      "image_path": "street.jpg",
+      "country_name": "France",
+      "town_name": "Paris"
+    },
+    {
+      "image_path": "operahouse.jpg",
+      "country_name": "Australia",
+      "town_name": "Sydney"
+    }
+  ]
 }
