@@ -1,0 +1,14 @@
+{
+	"locations": [
+		{
+			"image_path": "lighthouse.jpg",
+			"country_name": "Finland",
+			"town_name"	: "Oulu"
+		},
+		{
+			"image_path": "lighthouse2.jpg",
+			"country_name": "Finland2",
+			"town_name"	: "Oulu2"
+		},
+	]
+}
