@@ -1,10 +1,4 @@
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-
-app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "" # INSERT POSTGRESQL HERE
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-db = SQLAlchemy(app)
+from app import db
 
 class PlayedGame(db.Model):
     id = db.Column(db.Integer, primary_key=True) # Check this https://docs.sqlalchemy.org/en/14/dialects/postgresql.html#sequences-serial-identity
@@ -23,6 +17,3 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(64), nullable=False)
     password = db.Column(db.String(64), nullable=False)
-
-
-    
