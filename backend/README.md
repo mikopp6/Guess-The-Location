@@ -1,6 +1,10 @@
+### Install instructions
+
 1. Create and run Python virtual environment
-  python -m venv .\backend\
-  .\activate.bat
+
+      ```python -m venv .```
+
+
 
 2. Install dependencies inside environment
   pip install Flask
@@ -9,17 +13,15 @@
   pip install flask-migrate
 
 
-3. Install PostgreSQL 14.1, and create database gtl_dev
-  
-  psql -U postgres
-  create database gtl_dev;
-  check created databases with: \l
+3. Install PostgreSQL 14.1, credentials postgres:postgres
 
+4. Create database gtl_dev
 
-4. Initiate db with flask inside src-folder
-  flask db init
-  flask db migrate
-  flask db upgrade
+4. Initiate db with flask (inside src-folder)
+
+    ```flask db init```
+    ```flask db migrate```
+    ```flask db upgrade```
 
 5. Populate database with script 
   how
@@ -27,4 +29,5 @@
   populate
 
 99. Get dump from db
-  pg_dump gtl_dev > dbdump -U postgres
+
+      ```pg_dump gtl_dev > dbdump```
