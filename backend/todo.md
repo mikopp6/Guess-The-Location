@@ -1,0 +1,1 @@
+1. Add many-to-many relationship location-playedgame or something else, or maybe person-location relation (who added the location)
