@@ -1,6 +1,7 @@
 import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
 db = SQLAlchemy()
 
@@ -29,9 +30,11 @@ def create_app(test_config=None):
 
     from . import models
     from . import api
+
     from gtl.resources.location import LocationConverter
     app.url_map.converters["location"] = LocationConverter
     
     app.register_blueprint(api.api_bp)
 
+    migrate = Migrate(app, db)
     return app

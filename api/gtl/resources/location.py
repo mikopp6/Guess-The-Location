@@ -5,7 +5,7 @@ from flask_restful import Resource
 from werkzeug.exceptions import BadRequest, UnsupportedMediaType, Conflict, NotFound
 from werkzeug.routing import BaseConverter
 
-from gtl.models import *
+from gtl.models import Location
 
 
 JSON = "application/json"
@@ -13,7 +13,12 @@ JSON = "application/json"
 class LocationCollection(Resource):
 
     def get(self):
-        pass
+        body = {}
+        body["items"] = []
+        for db_location in Location.query.all():
+            body["items"].append(db_location.serialize())
+
+        return Response(json.dumps(body), 200, mimetype=JSON)
 
 
     def post(self):
@@ -37,7 +42,6 @@ class LocationConverter(BaseConverter):
         if db_location is None:
             raise NotFound
         db_location.id = str(db_location.id)
-        print("in convert")
         return db_location
 
     def to_url(self, db_location):

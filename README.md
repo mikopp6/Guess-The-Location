@@ -25,7 +25,7 @@
 
 4. Create database named gtl_dev
 
-5. Initiate the database with flask (in venv, inside src-folder)
+5. Initiate the database with flask (in venv, inside gtl-folder)
 
     ```flask db init```
 
@@ -33,7 +33,7 @@
 
     ```flask db upgrade```
 
-6. Populate database with script (in venv, inside src-folder)
+6. Populate database with script (in venv, inside gtl-folder)
   
     ```python3 populate.py```
 

@@ -33,20 +33,21 @@ class Location(db.Model):
     image_path = db.Column(db.String(64), nullable=False)
     country_name = db.Column(db.String(64), nullable=False)
     town_name = db.Column(db.String(64), nullable=False)
-
-    #person_id = db.Column(db.Integer, db.ForeignKey('person.id', ondelete='SET NULL'))
+    person_id = db.Column(db.Integer, db.ForeignKey('person.id', ondelete='SET NULL'))
 
     def serialize(self):
         return {
             "image_path": self.image_path,
             "country_name": self.country_name,
-            "town_name": self.town_name
+            "town_name": self.town_name,
+            "person_id": self.person_id
         }
 
     def deserialize(self, doc):
         self.image_path = doc["image_path"]
         self.country_name = doc["country_name"]
         self.town_name = doc["town_name"]
+        self.person_id = doc["person_id"]
 
     @staticmethod
     def json_schema():
@@ -72,8 +73,7 @@ class Person(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(64), nullable=False)
     password = db.Column(db.String(64), nullable=False)
-
-    #locations = db.relationship("Location", backref='person')
+    locations = db.relationship("Location", backref='person')
 
     @staticmethod
     def json_schema():

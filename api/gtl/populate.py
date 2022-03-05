@@ -1,9 +1,12 @@
-from random import randint, random
-from models import PlayedGame, Person, Location
-from app import db
 from random import randint
+from gtl.models import PlayedGame, Person, Location
 import json
 import datetime
+
+from gtl import create_app, db
+
+app = create_app()
+app.app_context().push()
 
 # List of users/admins/whatever (person-table)
 persons = [
@@ -28,7 +31,7 @@ for name in names:
 
 # Add persons to db session
 for person in persons:
-  pers = Person( # :DDDDD
+  pers = Person(
       email = person["email"],
       password = person["password"],
     )
@@ -43,7 +46,8 @@ with open('images/locationdata.json') as json_file:
       loc = Location(
         image_path = location["image_path"],
         country_name = location["country_name"],
-        town_name = location["town_name"]
+        town_name = location["town_name"],
+        person_id = location["person_id"]
       )
       
       db.session.add(loc)
