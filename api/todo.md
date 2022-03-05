@@ -9,7 +9,7 @@ DL3
 
   2. Toteuta resurssit (tiedostot), DOKUMENTOI SAMALLA
 
-      2.1 Persons       - Juho
+      2.1 Persons       - 
 
       2.2 Locations     - Miko
 
@@ -21,13 +21,13 @@ DL3
 
   4. Tee populaatio skriptit (populate.py)
 
-  5. Tee testit https://lovelace.oulu.fi/ohjelmoitava-web/  ohjelmoitava-web/testing-flask-applications/
+  5. Tee testit https://lovelace.oulu.fi/ohjelmoitava-web/ohjelmoitava-web/testing-flask-applications/
 
-  https://lovelace.oulu.fi/ohjelmoitava-web/ohjelmoitava-web/ testing-flask-applications-part-2/
+  https://lovelace.oulu.fi/ohjelmoitava-web/ohjelmoitava-web/testing-flask-applications-part-2/
 
   6. Viimeistele
 
-  6.1 Tarkista layout: https://lovelace.oulu.fi/ohjelmoitava-web/ ohjelmoitava-web/flask-api-project-layout/
+  6.1 Tarkista layout: https://lovelace.oulu.fi/ohjelmoitava-web/ohjelmoitava-web/flask-api-project-layout/
 
   6.2 Tarkista REST conformance
 

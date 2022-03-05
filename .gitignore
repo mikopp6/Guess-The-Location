@@ -3,10 +3,11 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-# Python, Flask etc backend stuff
-backend/lib*
-backend/scripts
-backend/include
-backend/src/migrations
-backend/bin
-backend/pyvenv.cfg
+# Python, Flask etc api stuff
+api/lib*
+api/scripts
+api/include
+api/src/migrations
+api/bin
+api/pyvenv.cfg
+api/dbdump

@@ -9,7 +9,7 @@
 
 # API Install instructions
 
-0. Run all commands inside /backend, unless told otherwise
+0. Run all commands inside /api, unless told otherwise
 
 1. Create and run Python virtual environment
 
@@ -18,7 +18,7 @@
 
 2. Install dependencies while inside the venv
 
-    ```pip install Flask flask-sqlalchemy psycopg2-binary flask-migrate```
+    ```pip install -r requirements.txt```
   
 
 3. Install PostgreSQL 14.1, set credentials as postgres:postgres
