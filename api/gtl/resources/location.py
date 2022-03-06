@@ -14,8 +14,8 @@ from gtl.models import Location
 
 JSON = "application/json"
 
-class LocationCollection(Resource):
 
+class LocationCollection(Resource):
     def get(self):
         body = {}
         body["items"] = []
@@ -27,43 +27,52 @@ class LocationCollection(Resource):
     def post(self):
         if not request.json:
             raise UnsupportedMediaType
-        
+
         try:
-            validate(request.json, Location.json_schema(), format_checker=draft7_format_checker)
+            validate(
+                request.json,
+                Location.json_schema(),
+                format_checker=draft7_format_checker,
+            )
         except ValidationError as e:
             raise BadRequest(description=str(e))
-        
+
         try:
             location = Location(
-                image_path = request.json["image_path"],
-                country_name = request.json["country_name"],
-                town_name = request.json["town_name"],
-                person_id = request.json["person_id"]
+                image_path=request.json["image_path"],
+                country_name=request.json["country_name"],
+                town_name=request.json["town_name"],
+                person_id=request.json["person_id"],
             )
             db.session.add(location)
             db.session.commit()
         except IntegrityError:
             raise Conflict(description="Already exists")
-        
-        return Response(status=201, headers={
-            "Location": url_for("api.locationitem", location=location)
-        })
+
+        return Response(
+            status=201,
+            headers={"Location": url_for("api.locationitem", location=location)},
+        )
 
 
 class LocationItem(Resource):
     def get(self, location):
         body = location.serialize()
         return Response(json.dumps(body), 200, mimetype=JSON)
-    
+
     def put(self, location):
         if not request.json:
             raise UnsupportedMediaType
-        
+
         try:
-            validate(request.json, Location.json_schema(), format_checker=draft7_format_checker)
+            validate(
+                request.json,
+                Location.json_schema(),
+                format_checker=draft7_format_checker,
+            )
         except ValidationError as e:
             raise BadRequest(description=str(e))
-        
+
         location.image_path = request.json["image_path"]
         location.country_name = request.json["country_name"]
         location.town_name = request.json["town_name"]
@@ -79,12 +88,13 @@ class LocationItem(Resource):
     def delete(self, location):
         db.session.delete(location)
         db.session.commit()
-        
+
         return Response(status=204)
+
 
 class LocationConverter(BaseConverter):
     def to_python(self, location_id):
-        
+
         db_location = Location.query.filter_by(id=location_id).first()
         if db_location is None:
             raise NotFound
