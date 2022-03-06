@@ -1,10 +1,14 @@
 import json
+from sqlalchemy.exc import IntegrityError
 
 from flask import Response, request, url_for
-from flask_restful import Resource
+from flask_restful import Resource, abort
 from werkzeug.exceptions import BadRequest, UnsupportedMediaType, Conflict, NotFound
 from werkzeug.routing import BaseConverter
 
+from jsonschema import validate, ValidationError, draft7_format_checker
+
+from gtl import db
 from gtl.models import Location
 
 
@@ -20,9 +24,31 @@ class LocationCollection(Resource):
 
         return Response(json.dumps(body), 200, mimetype=JSON)
 
-
     def post(self):
-        pass
+        if not request.json:
+            raise UnsupportedMediaType
+        
+        try:
+            validate(request.json, Location.json_schema(), format_checker=draft7_format_checker)
+        except ValidationError as e:
+            raise BadRequest(description=str(e))
+        
+        try:
+            location = Location(
+                image_path = request.json["image_path"],
+                country_name = request.json["country_name"],
+                town_name = request.json["town_name"],
+                person_id = request.json["person_id"]
+            )
+            db.session.add(location)
+            db.session.commit()
+        except IntegrityError:
+            raise Conflict(description="Already exists")
+        
+        return Response(status=201, headers={
+            "Location": url_for("api.locationitem", location=location)
+        })
+
 
 class LocationItem(Resource):
     def get(self, location):
@@ -30,10 +56,31 @@ class LocationItem(Resource):
         return Response(json.dumps(body), 200, mimetype=JSON)
     
     def put(self, location):
-        pass
+        if not request.json:
+            raise UnsupportedMediaType
+        
+        try:
+            validate(request.json, Location.json_schema(), format_checker=draft7_format_checker)
+        except ValidationError as e:
+            raise BadRequest(description=str(e))
+        
+        location.image_path = request.json["image_path"]
+        location.country_name = request.json["country_name"]
+        location.town_name = request.json["town_name"]
+        location.person_id = request.json["person_id"]
+
+        try:
+            db.session.commit()
+        except IntegrityError:
+            raise Conflict(description="Already exists")
+
+        return Response(status=200)
 
     def delete(self, location):
-        pass
+        db.session.delete(location)
+        db.session.commit()
+        
+        return Response(status=204)
 
 class LocationConverter(BaseConverter):
     def to_python(self, location_id):
@@ -45,4 +92,4 @@ class LocationConverter(BaseConverter):
         return db_location
 
     def to_url(self, db_location):
-        return db_location.id
+        return str(db_location.id)

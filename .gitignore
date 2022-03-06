@@ -11,3 +11,6 @@ api/src/migrations
 api/bin
 api/pyvenv.cfg
 api/dbdump
+
+migrations/
+instance/

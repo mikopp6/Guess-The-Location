@@ -11,7 +11,7 @@ DL3
 
       2.1 Persons       - 
 
-      2.2 Locations     - Miko
+      ~~2.2 Locations     - Miko~~
 
       2.3 Games         - Santeri
 

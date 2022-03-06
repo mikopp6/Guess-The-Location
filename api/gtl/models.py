@@ -30,7 +30,7 @@ class PlayedGame(db.Model):
 
 class Location(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    image_path = db.Column(db.String(64), nullable=False)
+    image_path = db.Column(db.String(64), unique=True, nullable=False)
     country_name = db.Column(db.String(64), nullable=False)
     town_name = db.Column(db.String(64), nullable=False)
     person_id = db.Column(db.Integer, db.ForeignKey('person.id', ondelete='SET NULL'))
@@ -57,7 +57,7 @@ class Location(db.Model):
         }
         props = schema["properties"] = {}
         props["image_path"] = {
-            "description": "Path to image of the location",
+            "description": "Unique path to image of the location",
             "type": "string"
         }
         props["country_name"] = {
