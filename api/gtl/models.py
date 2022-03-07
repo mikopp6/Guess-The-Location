@@ -3,9 +3,7 @@ from datetime import datetime
 
 
 class PlayedGame(db.Model):
-    id = db.Column(
-        db.Integer, primary_key=True
-    )  # Check this https://docs.sqlalchemy.org/en/14/dialects/postgresql.html#sequences-serial-identity
+    id = db.Column(db.Integer, primary_key=True)
     player_name = db.Column(db.String(3), nullable=False)
     score = db.Column(db.Integer, nullable=False)
     timestamp = db.Column(db.DateTime, nullable=False)
@@ -27,16 +25,24 @@ class PlayedGame(db.Model):
 
     @staticmethod
     def json_schema():
-        schema = {"type": "object", "required": ["player_name", "score"]}
+        schema = {
+            "type": "object",
+            "required": ["player_name", "score"]
+        }
         props = schema["properties"] = {}
         props["player_name"] = {
             "description": "3-letter name of player",
             "type": "string",
+            "maxLength": 3
         }
-        props["score"] = {"description": "Score of played game", "type": "number"}
+        props["score"] = {
+            "description": "Score of played game",
+            "type": "number"
+        }
         props["timestamp"] = {
             "description": "Timestamp of game completion",
             "type": "string",
+            "pattern": "^\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d(?:\.\d+)?Z?$"
         }
         return schema
 
@@ -47,6 +53,7 @@ class Location(db.Model):
     country_name = db.Column(db.String(64), nullable=False)
     town_name = db.Column(db.String(64), nullable=False)
     person_id = db.Column(db.Integer, db.ForeignKey("person.id", ondelete="SET NULL"))
+    person = db.relationship("Person", back_populates="locations")
 
     def serialize(self):
         return {
@@ -88,12 +95,36 @@ class Person(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(64), nullable=False)
     password = db.Column(db.String(64), nullable=False)
-    locations = db.relationship("Location", backref="person")
+    locations = db.relationship("Location", back_populates="person")
+
+    def serialize(self):
+        if self.locations:
+            locations = []
+            for location in self.locations:
+                locations.append(location)
+        return {
+            "email": self.email,
+            "password": self.password,
+            "locations": locations
+        }
+
+    def deserialize(self, doc):
+        self.email = doc["email"]
+        self.password = doc["password"]
 
     @staticmethod
     def json_schema():
-        schema = {"type": "object", "required": ["email", "password"]}
+        schema = {
+            "type": "object",
+            "required": ["email", "password"]
+        }
         props = schema["properties"] = {}
-        props["email"] = {"description": "Persons email address", "type": "string"}
-        props["password"] = {"description": "Persons password", "type": "string"}
+        props["email"] = {
+            "description": "Persons email address",
+            "type": "string"
+        }
+        props["password"] = {
+            "description": "Persons password",
+            "type": "string"
+        }
         return schema
