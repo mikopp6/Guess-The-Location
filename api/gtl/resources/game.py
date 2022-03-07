@@ -10,7 +10,6 @@ from jsonschema import validate, ValidationError, draft7_format_checker
 
 from gtl import db
 from gtl.models import PlayedGame
-from datetime import datetime
 
 JSON = "application/json"
 
@@ -38,12 +37,8 @@ class GameCollection(Resource):
             raise BadRequest(description=str(e))
 
         try:
-            game = PlayedGame(
-                player_name=request.json["player_name"],
-                score=request.json["score"],
-                timestamp=datetime.now(),
-                game_type=request.json["game_type"],
-            )
+            game = PlayedGame()
+            game.deserialize(request.json)
             db.session.add(game)
             db.session.commit()
         except IntegrityError:
@@ -73,9 +68,7 @@ class GameItem(Resource):
         except ValidationError as e:
             raise BadRequest(description=str(e))
 
-        game.player_name = request.json["player_name"]
-        game.score = request.json["score"]
-        game.game_type = request.json["game_type"]
+        game.deserialize(request.json)
 
         try:
             db.session.commit()

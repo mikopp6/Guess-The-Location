@@ -38,12 +38,8 @@ class LocationCollection(Resource):
             raise BadRequest(description=str(e))
 
         try:
-            location = Location(
-                image_path=request.json["image_path"],
-                country_name=request.json["country_name"],
-                town_name=request.json["town_name"],
-                person_id=request.json["person_id"],
-            )
+            location = Location()
+            location.deserialize(request.json)
             db.session.add(location)
             db.session.commit()
         except IntegrityError:
@@ -73,10 +69,7 @@ class LocationItem(Resource):
         except ValidationError as e:
             raise BadRequest(description=str(e))
 
-        location.image_path = request.json["image_path"]
-        location.country_name = request.json["country_name"]
-        location.town_name = request.json["town_name"]
-        location.person_id = request.json["person_id"]
+        location.deserialize(request.json)
 
         try:
             db.session.commit()
