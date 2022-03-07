@@ -98,10 +98,10 @@ class Person(db.Model):
     locations = db.relationship("Location", back_populates="person")
 
     def serialize(self):
+        locations = []
         if self.locations:
-            locations = []
             for location in self.locations:
-                locations.append(location)
+                locations.append(location.serialize())
         return {
             "email": self.email,
             "password": self.password,

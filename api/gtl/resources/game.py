@@ -86,7 +86,6 @@ class GameItem(Resource):
 
 class GameConverter(BaseConverter):
     def to_python(self, game_id):
-        print("testii")
         db_game = PlayedGame.query.filter_by(id=game_id).first()
         if db_game is None:
             raise NotFound

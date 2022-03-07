@@ -34,10 +34,14 @@ def create_app(test_config=None):
 
     from gtl.resources.location import LocationConverter
     from gtl.resources.game import GameConverter
+    from gtl.resources.person import PersonConverter
+
 
     app.url_map.converters["location"] = LocationConverter
-
     app.url_map.converters["game"] = GameConverter
+    app.url_map.converters["person"] = PersonConverter
+
+
 
     app.register_blueprint(api.api_bp)
 

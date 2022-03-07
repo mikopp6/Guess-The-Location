@@ -85,7 +85,6 @@ class PersonItem(Resource):
 
 class PersonConverter(BaseConverter):
     def to_python(self, person_id):
-        
         db_person = Person.query.filter_by(id=person_id).first()
         if db_person is None:
             raise NotFound
