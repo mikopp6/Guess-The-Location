@@ -64,5 +64,5 @@ for game in games:
   db.session.add(pg)
 
 
-# Self-explanatory
+# Commit persons, locations and games
 db.session.commit()
