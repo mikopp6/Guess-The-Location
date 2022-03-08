@@ -5,21 +5,13 @@
 
 DL3 
 
-  ~~1. Dokumentoi 5 resurssia. Metodeja GET PUT POST DELETE   käytettävä kaikkia vähintään kahdesti.~~
+~~1. Dokumentoi 5 resurssia. Metodeja GET PUT POST DELETE   käytettävä kaikkia vähintään kahdesti.~~
 
-  2. Toteuta resurssit (tiedostot)
+~~2. Toteuta resurssit (tiedostot)~~
 
-      ~~2.1 Persons       -~~
+~~3. Kokoa resurssit toimivaksi app.py~~
 
-      ~~2.2 Locations     - Miko~~
-
-      ~~2.3 Games         - Santeri~~
-
-      2.4 Statistics (karvalakki-versio)
-
-  3. Kokoa resurssit toimivaksi app.py
-
-  ~~4. Tee populaatio skriptit (populate.py)~~
+~~4. Tee populaatio skriptit (populate.py)~~
 
   5. Dokumentoi kaikki
 

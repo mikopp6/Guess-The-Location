@@ -12,5 +12,7 @@ api/bin
 api/pyvenv.cfg
 api/dbdump
 
+.coverage
+
 migrations/
 instance/
