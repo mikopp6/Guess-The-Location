@@ -1,5 +1,7 @@
 ~~DL2~~
+
 ~~1. Add person-location relation (who added the location)~~
+
 ~~2. Update diagram~~
 
 DL3
@@ -14,11 +16,7 @@ DL3
 
 5. Dokumentoi kaikki
 
-6. Tee testit https://lovelace.oulu.fi/ohjelmoitava-web/ohjelmoitava-web/testing-flask-applications/
-
-https://lovelace.oulu.fi/ohjelmoitava-web/ohjelmoitava-web/testing-flask-applications-part-2/
-
-pytest --cov-report term --cov=gtl.resources tests/
+~~6. Tee testit~~
 
 7. Viimeistele
 
