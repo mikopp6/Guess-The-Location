@@ -182,7 +182,7 @@ class TestStatistic(object):
         """
         Tests the GET method. Checks that the response status code is 200, and
         then checks that the number of items is correct, and that all of the 
-        expected attributes are present.
+        expected attributes are present, and in correct order.
         """
         resp = client.get(self.RESOURCE_URL)
         assert resp.status_code == 200
