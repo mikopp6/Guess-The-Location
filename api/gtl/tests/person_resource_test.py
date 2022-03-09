@@ -1,12 +1,11 @@
 import json
 import os
-from random import randint
 import pytest
 import tempfile
-import datetime
 
-from gtl.models import PlayedGame
+from gtl.models import Location, Person
 from gtl import create_app, db
+
 
 # based on http://flask.pocoo.org/docs/1.0/testing/
 @pytest.fixture
@@ -27,36 +26,43 @@ def client():
 
 
 def _populate_db():
-    names = ["AAA", "BBB", "CCC", "DDD", "EEE", "FFF", "GGG", "HHH", "III", "JJJ"]
-    for i in range(0, 10):
-        s = PlayedGame(
-            player_name=names[i],
-            score=(100*(i+1)),
-            timestamp=datetime.datetime.utcnow(),
-            game_type=randint(0, 3)
+    for i in range(0, 4):
+        s = Person(
+            email="user{}@gmail.com".format(i),
+            password="hunter{}".format(i)
         )
         db.session.add(s)
+        
+    for i in range(0, 8):
+        s = Location(
+            image_path="testikuva{}.jpg".format(i),
+            country_name="country{}".format(i),
+            town_name="town{}".format(i),
+            person_id=(i % 3)+1,
+        )
+        print(s.person_id)
+        db.session.add(s)
+
     db.session.commit()
 
-def _get_game_json():
+def _get_person_json():
     """
-    Creates a valid game JSON object to be used for PUT and POST tests.
+    Creates a valid person JSON object to be used for PUT and POST tests.
     """
 
     return {
-        "player_name": "MIK",
-        "score": 123001,
-        "timestamp": str(datetime.datetime.utcnow()),
-        "game_type": 1,
+        "email": "testi@testi.com",
+        "password": "testi123"
     }
 
-class TestGameCollection(object):
+
+class TestPersonCollection(object):
     """
-    This class implements tests for each HTTP method in the games collection
+    This class implements tests for each HTTP method in the person collection
     resource.
     """
 
-    RESOURCE_URL = "/api/games/"
+    RESOURCE_URL = "/api/persons/"
 
     def test_get(self, client):
         """
@@ -67,23 +73,22 @@ class TestGameCollection(object):
         resp = client.get(self.RESOURCE_URL)
         assert resp.status_code == 200
         body = json.loads(resp.data)
-        assert len(body["items"]) == 10
+        assert len(body["items"]) == 4
         for item in body["items"]:
-            assert "player_name" in item
-            assert "score" in item
-            assert "timestamp" in item
-            assert "game_type" in item
-    
+            assert "email" in item
+            assert "password" in item
+
     def test_post(self, client):
         """
         Tests the POST method. Checks all of the possible error codes, and
         also checks that a valid request receives a 201 response with a
-        location header that leads into the newly created resource.
-        Checks that all attributes are present in this new resource. 
+        person header that leads into the newly created resource.
+        Checks that all attributes are present in this new resource.
         """
 
-        valid = _get_game_json()
-        valid_object_id = "11"
+        valid = _get_person_json()
+        valid_object_id = "5"
+
         # test with wrong content type
         resp = client.post(self.RESOURCE_URL, data=json.dumps(valid))
         assert resp.status_code == 415
@@ -95,20 +100,22 @@ class TestGameCollection(object):
         resp = client.get(resp.headers["Location"])
         assert resp.status_code == 200
         body = json.loads(resp.data)
-        assert body["player_name"] == "MIK"
-        assert body["score"] == 123001
-        # assert body["timestamp"] == time ??, idk not necessary to test this
-        assert body["game_type"] == 1
+        assert body["email"] == "testi@testi.com"
+        assert body["password"] == "testi123"
 
-        # remove player_name field for 400
-        valid.pop("player_name")
+        # send same data again for 409
+        resp = client.post(self.RESOURCE_URL, json=valid)
+        assert resp.status_code == 409
+
+        # remove email field for 400
+        valid.pop("email")
         resp = client.post(self.RESOURCE_URL, json=valid)
         assert resp.status_code == 400
 
-class TestGameItem(object):
+class TestPersonItem(object):
 
-    RESOURCE_URL = "/api/games/1/"
-    INVALID_URL = "/api/games/x/"
+    RESOURCE_URL = "/api/persons/1/"
+    INVALID_URL = "/api/persons/x/"
 
     def test_get(self, client):
         """
@@ -120,10 +127,8 @@ class TestGameItem(object):
         resp = client.get(self.RESOURCE_URL)
         assert resp.status_code == 200
         body = json.loads(resp.data)
-        assert body["player_name"] == "AAA"
-        assert body["score"] == 100
-        # assert body["timestamp"] == time ??, idk not necessary to test this
-        assert body["game_type"] == 1 or 2 or 3
+        assert body["email"] == "user0@gmail.com"
+        assert body["password"] == "hunter0"
         
         # test invalid url
         resp = client.get(self.INVALID_URL)
@@ -135,7 +140,7 @@ class TestGameItem(object):
         checks that a valid request receives a 204 response.
         """
 
-        valid = _get_game_json()
+        valid = _get_person_json()
 
         # test with wrong content type
         resp = client.put(self.RESOURCE_URL, data=json.dumps(valid))
@@ -145,21 +150,27 @@ class TestGameItem(object):
         resp = client.put(self.INVALID_URL, json=valid)
         assert resp.status_code == 404
 
-        # test with valid (only change score)
-        valid["score"] = 0
+        # test with another person's email
+        valid["email"] = "user2@gmail.com"
+        resp = client.put(self.RESOURCE_URL, json=valid)
+        assert resp.status_code == 409
+
+        # test with valid (only change password)
+        valid["email"] = "user99@gmail.com"
+        valid["password"] = "newpw"
         resp = client.put(self.RESOURCE_URL, json=valid)
         assert resp.status_code == 200
 
         # remove field for 400
-        valid.pop("score")
+        valid.pop("password")
         resp = client.put(self.RESOURCE_URL, json=valid)
         assert resp.status_code == 400
 
     def test_delete(self, client):
         """
         Tests the DELETE method. Checks that a valid request receives 204
-        response and that trying to GET the game afterwards results in 404.
-        Also checks that trying to delete a game that doesn't exist results
+        response and that trying to GET the person afterwards results in 404.
+        Also checks that trying to delete a person that doesn't exist results
         in 404.
         """
 
@@ -169,30 +180,3 @@ class TestGameItem(object):
         assert resp.status_code == 404
         resp = client.delete(self.INVALID_URL)
         assert resp.status_code == 404
-
-class TestStatistic(object):
-    """
-    This class implements tests for each HTTP method in the statistic
-    resource.
-    """
-
-    RESOURCE_URL = "/api/statistics/"
-
-    def test_get(self, client):
-        """
-        Tests the GET method. Checks that the response status code is 200, and
-        then checks that the number of items is correct, and that all of the 
-        expected attributes are present.
-        """
-        resp = client.get(self.RESOURCE_URL)
-        assert resp.status_code == 200
-        body = json.loads(resp.data)
-        assert len(body["items"]) == 10
-        for item in body["items"]:
-            assert "player_name" in item
-            assert "score" in item
-            assert "timestamp" in item
-            assert "game_type" in item
-        assert body["items"][0]["score"] == 1000
-        assert body["items"][6]["score"] == 400
-        assert body["items"][9]["score"] == 100
