@@ -110,7 +110,6 @@ class TestLocationCollection(object):
         resp = client.post(self.RESOURCE_URL, json=valid)
         assert resp.status_code == 400
 
-
 class TestLocationItem(object):
 
     RESOURCE_URL = "/api/locations/1/"
@@ -130,14 +129,15 @@ class TestLocationItem(object):
         assert body["country_name"] == "country0"
         assert body["town_name"] == "town0"
         assert body["person_id"] == 1
+        
+        # test invalid url
         resp = client.get(self.INVALID_URL)
         assert resp.status_code == 404
 
     def test_put(self, client):
         """
-        Tests the PUT method. Checks all of the possible erroe codes, and also
-        checks that a valid request receives a 204 response. Also tests that
-        when name is changed, the location can be found from a its new URI.
+        Tests the PUT method. Checks all of the possible error codes, and also
+        checks that a valid request receives a 204 response.
         """
 
         valid = _get_location_json()
@@ -146,6 +146,7 @@ class TestLocationItem(object):
         resp = client.put(self.RESOURCE_URL, data=json.dumps(valid))
         assert resp.status_code == 415
 
+        # test invalid url
         resp = client.put(self.INVALID_URL, json=valid)
         assert resp.status_code == 404
 
@@ -167,7 +168,7 @@ class TestLocationItem(object):
 
     def test_delete(self, client):
         """
-        Tests the DELETE method. Checks that a valid request reveives 204
+        Tests the DELETE method. Checks that a valid request receives 204
         response and that trying to GET the location afterwards results in 404.
         Also checks that trying to delete a location that doesn't exist results
         in 404.

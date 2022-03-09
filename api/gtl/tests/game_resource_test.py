@@ -100,7 +100,72 @@ class TestGameCollection(object):
         # assert body["timestamp"] == time ??, idk not necessary to test this
         assert body["game_type"] == 1
 
-        # remove imagepath field for 400
+        # remove player_name field for 400
         valid.pop("player_name")
         resp = client.post(self.RESOURCE_URL, json=valid)
         assert resp.status_code == 400
+
+class TestGameItem(object):
+
+    RESOURCE_URL = "/api/games/1/"
+    INVALID_URL = "/api/games/x/"
+
+    def test_get(self, client):
+        """
+        Tests the GET method. Checks that the response status code is 200, and
+        then checks that all of the expected attributes are present.
+        Also checks that an invalid url returns 404.
+        """
+
+        resp = client.get(self.RESOURCE_URL)
+        assert resp.status_code == 200
+        body = json.loads(resp.data)
+        assert body["player_name"] == "AAA"
+        assert body["score"] == 100
+        # assert body["timestamp"] == time ??, idk not necessary to test this
+        assert body["game_type"] == 1 or 2 or 3
+        
+        # test invalid url
+        resp = client.get(self.INVALID_URL)
+        assert resp.status_code == 404
+
+    def test_put(self, client):
+        """
+        Tests the PUT method. Checks all of the possible error codes, and also
+        checks that a valid request receives a 204 response.
+        """
+
+        valid = _get_game_json()
+
+        # test with wrong content type
+        resp = client.put(self.RESOURCE_URL, data=json.dumps(valid))
+        assert resp.status_code == 415
+
+        # test invalid url
+        resp = client.put(self.INVALID_URL, json=valid)
+        assert resp.status_code == 404
+
+        # test with valid (only change score)
+        valid["score"] = 0
+        resp = client.put(self.RESOURCE_URL, json=valid)
+        assert resp.status_code == 200
+
+        # remove field for 400
+        valid.pop("score")
+        resp = client.put(self.RESOURCE_URL, json=valid)
+        assert resp.status_code == 400
+
+    def test_delete(self, client):
+        """
+        Tests the DELETE method. Checks that a valid request receives 204
+        response and that trying to GET the game afterwards results in 404.
+        Also checks that trying to delete a game that doesn't exist results
+        in 404.
+        """
+
+        resp = client.delete(self.RESOURCE_URL)
+        assert resp.status_code == 204
+        resp = client.get(self.RESOURCE_URL)
+        assert resp.status_code == 404
+        resp = client.delete(self.INVALID_URL)
+        assert resp.status_code == 404

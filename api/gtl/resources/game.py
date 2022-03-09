@@ -67,10 +67,7 @@ class GameItem(Resource):
 
         game.deserialize(request.json)
 
-        try:
-            db.session.commit()
-        except IntegrityError:
-            raise Conflict(description="Already exists")
+        db.session.commit()
 
         return Response(status=200)
 
