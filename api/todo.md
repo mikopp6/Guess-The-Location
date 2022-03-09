@@ -18,7 +18,7 @@ DL3
 
 https://lovelace.oulu.fi/ohjelmoitava-web/ohjelmoitava-web/testing-flask-applications-part-2/
 
-pytest --cov-report term --cov=gtl/resources tests/
+pytest --cov-report term --cov=gtl.resources tests/
 
 7. Viimeistele
 

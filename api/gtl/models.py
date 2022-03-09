@@ -42,7 +42,7 @@ class PlayedGame(db.Model):
         props["timestamp"] = {
             "description": "Timestamp of game completion",
             "type": "string",
-            "pattern": "^\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d(?:\.\d+)?Z?$"
+            "pattern": r"^\d{4}-[01]\d-[0-3]\d?[T ][0-2]\d:[0-5]\d:[0-5]\d(?:\.\d+)?$"
         }
         return schema
 

@@ -46,7 +46,7 @@ class PersonCollection(Resource):
 
         return Response(
             status=201,
-            headers={"Person": url_for("api.personitem", person=person)},
+            headers={"Location": url_for("api.personitem", person=person)},
         )
 
 

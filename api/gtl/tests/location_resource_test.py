@@ -2,13 +2,8 @@ import json
 import os
 import pytest
 import tempfile
-from datetime import datetime
-from jsonschema import validate
-from sqlalchemy.engine import Engine
-from sqlalchemy import event
-from sqlalchemy.exc import IntegrityError, StatementError
-from gtl.models import Location
 
+from gtl.models import Location
 from gtl import create_app, db
 
 
@@ -31,7 +26,7 @@ def client():
 
 
 def _populate_db():
-    for i in range(1, 5):
+    for i in range(0, 4):
         s = Location(
             image_path="testikuva{}.jpg".format(i),
             country_name="country{}".format(i),
@@ -57,7 +52,7 @@ def _get_location_json():
 
 class TestLocationCollection(object):
     """
-    This class implements tests for each HTTP method in location collection
+    This class implements tests for each HTTP method in the location collection
     resource.
     """
 
@@ -66,8 +61,8 @@ class TestLocationCollection(object):
     def test_get(self, client):
         """
         Tests the GET method. Checks that the response status code is 200, and
-        then checks that all of the expected attributes are present.
-        Also checks that all of the items from the DB population are present.
+        then checks that the number of items is correct, and that all of the 
+        expected attributes are present.
         """
         resp = client.get(self.RESOURCE_URL)
         assert resp.status_code == 200
@@ -84,10 +79,12 @@ class TestLocationCollection(object):
         Tests the POST method. Checks all of the possible error codes, and
         also checks that a valid request receives a 201 response with a
         location header that leads into the newly created resource.
+        Checks that all attributes are present in this new resource.
         """
 
         valid = _get_location_json()
-        valid["id"] = "5"  # HARD CODED. CHANGE THIS LATER!!
+        valid_object_id = "5"
+
         # test with wrong content type
         resp = client.post(self.RESOURCE_URL, data=json.dumps(valid))
         assert resp.status_code == 415
@@ -95,7 +92,7 @@ class TestLocationCollection(object):
         # test with valid and see that it exists afterward
         resp = client.post(self.RESOURCE_URL, json=valid)
         assert resp.status_code == 201
-        assert resp.headers["Location"].endswith(self.RESOURCE_URL + valid["id"] + "/")
+        assert resp.headers["Location"].endswith(self.RESOURCE_URL + valid_object_id + "/")
         resp = client.get(resp.headers["Location"])
         assert resp.status_code == 200
         body = json.loads(resp.data)
@@ -123,15 +120,15 @@ class TestLocationItem(object):
         """
         Tests the GET method. Checks that the response status code is 200, and
         then checks that all of the expected attributes are present.
-        Also checks that all of the items from the DB population are present.
+        Also checks that an invalid url returns 404.
         """
 
         resp = client.get(self.RESOURCE_URL)
         assert resp.status_code == 200
         body = json.loads(resp.data)
-        assert body["image_path"] == "testikuva1.jpg"
-        assert body["country_name"] == "country1"
-        assert body["town_name"] == "town1"
+        assert body["image_path"] == "testikuva0.jpg"
+        assert body["country_name"] == "country0"
+        assert body["town_name"] == "town0"
         assert body["person_id"] == 1
         resp = client.get(self.INVALID_URL)
         assert resp.status_code == 404
@@ -153,12 +150,12 @@ class TestLocationItem(object):
         assert resp.status_code == 404
 
         # test with another location's name
-        valid["image_path"] = "testikuva2.jpg"
+        valid["image_path"] = "testikuva1.jpg"
         resp = client.put(self.RESOURCE_URL, json=valid)
         assert resp.status_code == 409
 
         # test with valid (only change countryname)
-        valid["image_path"] = "testikuva1.jpg"
+        valid["image_path"] = "testikuva0.jpg"
         valid["country_name"] = "sweden"
         resp = client.put(self.RESOURCE_URL, json=valid)
         assert resp.status_code == 200

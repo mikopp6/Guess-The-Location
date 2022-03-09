@@ -13,6 +13,6 @@ api/pyvenv.cfg
 api/dbdump
 
 .coverage
-
+.pytest_cache
 migrations/
 instance/

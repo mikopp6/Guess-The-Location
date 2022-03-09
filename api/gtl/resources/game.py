@@ -36,17 +36,14 @@ class GameCollection(Resource):
         except ValidationError as e:
             raise BadRequest(description=str(e))
 
-        try:
-            game = PlayedGame()
-            game.deserialize(request.json)
-            db.session.add(game)
-            db.session.commit()
-        except IntegrityError:
-            raise Conflict(description="Already exists")
+        game = PlayedGame()
+        game.deserialize(request.json)
+        db.session.add(game)
+        db.session.commit()
 
         return Response(
             status=201,
-            headers={"Game": url_for("api.gameitem", game=game)},
+            headers={"Location": url_for("api.gameitem", game=game)},
         )
 
 
