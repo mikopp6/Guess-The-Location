@@ -74,9 +74,14 @@ class TestPersonCollection(object):
         assert resp.status_code == 200
         body = json.loads(resp.data)
         assert len(body["items"]) == 4
-        for item in body["items"]:
+        for index, item in enumerate(body["items"]):
             assert "email" in item
             assert "password" in item
+            assert "locations" in item
+            if index == 1:
+                assert len(item["locations"]) == 3
+            if index == 2:
+                assert len(item["locations"]) == 2
 
     def test_post(self, client):
         """
@@ -115,6 +120,7 @@ class TestPersonCollection(object):
 class TestPersonItem(object):
 
     RESOURCE_URL = "/api/persons/1/"
+    LOCATIONS_RESOURCE_URL = "/api/locations/1/"
     INVALID_URL = "/api/persons/x/"
 
     def test_get(self, client):
@@ -180,3 +186,8 @@ class TestPersonItem(object):
         assert resp.status_code == 404
         resp = client.delete(self.INVALID_URL)
         assert resp.status_code == 404
+        
+        # check that location associated had its person set to null
+        resp = client.get(self.LOCATIONS_RESOURCE_URL)
+        body = json.loads(resp.data)
+        assert not body["person_id"]
