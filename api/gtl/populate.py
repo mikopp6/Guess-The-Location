@@ -5,8 +5,14 @@ import datetime
 
 from gtl import create_app, db
 
-
 def populate_db():
+    """
+    Utility function for populating database while in development.
+
+    Input: None
+    Output: None
+    Exceptions: None
+    """
     app = create_app()
     app.app_context().push()
 

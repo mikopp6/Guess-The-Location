@@ -8,7 +8,11 @@ import datetime
 from gtl.models import PlayedGame
 from gtl import create_app, db
 
-# based on http://flask.pocoo.org/docs/1.0/testing/
+# Test client based on http://flask.pocoo.org/docs/1.0/testing/
+# The actual tests themselves are heavily based on course material & examples:
+#   https://github.com/enkwolf/pwp-course-sensorhub-api-example/blob/master/tests/resource_test.py
+#   https://lovelace.oulu.fi/ohjelmoitava-web/ohjelmoitava-web/testing-flask-applications-part-2/
+
 @pytest.fixture
 def client():
     db_fd, db_fname = tempfile.mkstemp()

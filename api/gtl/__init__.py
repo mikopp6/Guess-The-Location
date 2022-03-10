@@ -8,8 +8,14 @@ db = SQLAlchemy()
 # Based on course example https://lovelace.oulu.fi/ohjelmoitava-web/ohjelmoitava-web/flask-api-project-layout/,
 # which is based on http://flask.pocoo.org/docs/1.0/tutorial/factory/#the-application-factory
 
-
 def create_app(test_config=None):
+    """
+        Main Flask app used to serve the api.
+
+        Input: test_config, used when testing. Defaults to None
+        Output: Flask app
+        Exceptions: None
+    """
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(
         SECRET_KEY="",
