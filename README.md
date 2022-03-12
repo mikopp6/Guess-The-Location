@@ -26,10 +26,6 @@
 
 5. Initiate the database with flask (in venv, inside gtl-folder)
 
-   `$env:FLASK_APP = "__init__"`
-
-   `$env:FLASK_ENV = "development"`
-
    `flask db init`
 
    `flask db migrate`
