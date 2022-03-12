@@ -2,13 +2,13 @@
 
 # Guess The Location
 
-## Group information
+### Group information
 
 - Miko Palojärvi miko.palojarvi@student.oulu.fi
 - Santeri Yritys santeri.yritys@student.oulu.fi
 - Juho-Heikki Holmi juho-heikki.holmi@student.oulu.fi
 
-# API Install instructions
+## API Install instructions
 
 0. Run all commands inside /api, unless told otherwise
 
@@ -36,6 +36,37 @@
 
    `python3 populate.py`
 
-7. Get dump from db
+      6.1. (optional). Get dump from db
 
-   `pg_dump gtl_dev > dbdump`
+      `pg_dump gtl_dev > dbdump`
+
+7. Start api (in venv, inside gtl-folder)
+
+   `flask run`
+
+## Additional stuff
+
+### Testing
+Run tests (in venv, inside gtl-folder)
+
+   `pytest`
+
+   Test coverage:
+
+   `pytest --cov-report term-missing --cov=gtl.resources tests/`
+
+   The errors that were found in testing consisted mainly of oversights in model attributes, e.g., missing unique values. Some http errors were also incorrect.
+
+### Rest Conformance
+
+
+
+Addressability
+
+Uniform interface
+
+Statelessness
+
+### URL Converters
+
+### Schema Validation
