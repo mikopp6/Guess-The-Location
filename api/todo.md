@@ -14,13 +14,13 @@ DL3
 
 ~~4. Tee populaatio skriptit (populate.py)~~
 
-5. Dokumentoi kaikki
+~~5. Dokumentoi kaikki~~
 
 ~~6. Tee testit~~
 
 7. Viimeistele
 
-7.1 Tarkista layout: https://lovelace.oulu.fi/ohjelmoitava-web/ohjelmoitava-web/flask-api-project-layout/
+~~7.1 Tarkista layout~~
 
 7.2 Tarkista REST conformance
 
