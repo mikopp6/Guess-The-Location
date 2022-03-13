@@ -57,16 +57,3 @@ Run tests (in venv, inside gtl-folder)
 
    The errors that were found in testing consisted mainly of oversights in model attributes, e.g., missing unique values. Some http errors were also incorrect.
 
-### Rest Conformance
-
-
-
-Addressability
-
-Uniform interface
-
-Statelessness
-
-### URL Converters
-
-### Schema Validation
