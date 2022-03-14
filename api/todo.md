@@ -46,6 +46,13 @@ pylint-korjaukset (docstringit, ) -Miko
 
 vaihda game validation käyttämään checkeriä regexin sijaan -Santeri
 
+DL4:
+
+- Resource relations (DL 27.03)
+
+- Api design -Santeri (DL 20.03)
+
+- Hypermedia Implementation (DL 27.03)
 
 DL5:
 
