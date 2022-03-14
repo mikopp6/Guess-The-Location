@@ -44,14 +44,14 @@ Korjaa addressability -Miko
 
 pylint-korjaukset (docstringit, ) -Miko
 
-vaihda game validation käyttämään checkeriä regexin sijaan -Miko
+vaihda game validation käyttämään checkeriä regexin sijaan -Santeri
 
 
 DL5:
 
-caching - Tarkistetaan myöhemmin
+caching - Tarkistetaan myöhemmin, että tehdäänkö.
 
-authentication - Tehdänän myöhemmin
+authentication - Tehdään myöhemmin.
 
 Muut fixit:
 
