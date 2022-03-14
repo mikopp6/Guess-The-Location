@@ -40,24 +40,28 @@
 
 DL3 fixit:
   
-Korjaa addressability, 
+Korjaa addressability -Miko
 
-pylint-korjaukset (docstringit, )
+pylint-korjaukset (docstringit, ) -Miko
 
-vaihda game validation käyttämään checkeriä regexin sijaan
+vaihda game validation käyttämään checkeriä regexin sijaan -Miko
 
-caching
 
-authentication
+DL5:
 
+caching - Tarkistetaan myöhemmin
+
+authentication - Tehdänän myöhemmin
 
 Muut fixit:
 
-setup.py requirements.txt:n tilalle
+setup.py requirements.txt:n tilalle -Santeri
 
-yhdistä converterit ja laita ne utils.py 
+yhdistä converterit ja laita ne utils.py -Santeri
 
-id:t urleista pois tai hashaa ne
+id:t urleista pois tai hashaa ne -Santeri tutkii
 
-PUT 200 -> 204
+PUT 200 -> 204 -Miko
+
+Jos ei oo määritetty psql. Api käyttää sqlite -Santeri
 
