@@ -48,9 +48,9 @@ vaihda game validation käyttämään checkeriä regexin sijaan -Santeri
 
 DL4:
 
-- Resource relations (DL 27.03)
+- Api document -Santeri (DL 20.03)
 
-- Api design -Santeri (DL 20.03)
+- Resource relations (DL 27.03)
 
 - Hypermedia Implementation (DL 27.03)
 
@@ -70,5 +70,5 @@ id:t urleista pois tai hashaa ne -Santeri tutkii
 
 PUT 200 -> 204 -Miko
 
-Jos ei oo määritetty psql. Api käyttää sqlite -Santeri
+~~Jos ei oo määritetty psql. Api käyttää sqlite -Santeri~~
 

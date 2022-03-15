@@ -7,12 +7,12 @@ __pycache__/
 api/lib*
 api/scripts
 api/include
-api/src/migrations
+api/gtl/migrations
 api/bin
 api/pyvenv.cfg
 api/dbdump
 
 .coverage
 .pytest_cache
-migrations/
 instance/
+.env
