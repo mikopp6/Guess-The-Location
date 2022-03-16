@@ -68,7 +68,7 @@ yhdistä converterit ja laita ne utils.py -Santeri
 
 id:t urleista pois tai hashaa ne -Santeri tutkii
 
-PUT 200 -> 204 -Miko
+~~PUT 200 -> 204 -Miko~~
 
 ~~Jos ei oo määritetty psql. Api käyttää sqlite -Santeri~~
 

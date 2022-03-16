@@ -168,7 +168,7 @@ class TestPersonItem(object):
         valid["email"] = "user99@gmail.com"
         valid["password"] = "newpw"
         resp = client.put(self.RESOURCE_URL, json=valid)
-        assert resp.status_code == 200
+        assert resp.status_code == 204
 
         # remove field for 400
         valid.pop("password")

@@ -122,7 +122,7 @@ class GameItem(Resource):
 
         db.session.commit()
 
-        return Response(status=200)
+        return Response(status=204)
 
     def delete(self, game):
         """

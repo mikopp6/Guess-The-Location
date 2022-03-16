@@ -162,7 +162,7 @@ class TestLocationItem(object):
         valid["image_path"] = "testikuva0.jpg"
         valid["country_name"] = "sweden"
         resp = client.put(self.RESOURCE_URL, json=valid)
-        assert resp.status_code == 200
+        assert resp.status_code == 204
 
         # remove field for 400
         valid.pop("country_name")

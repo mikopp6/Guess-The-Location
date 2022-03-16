@@ -152,7 +152,7 @@ class TestGameItem(object):
         # test with valid (only change score)
         valid["score"] = 0
         resp = client.put(self.RESOURCE_URL, json=valid)
-        assert resp.status_code == 200
+        assert resp.status_code == 204
 
         # remove field for 400
         valid.pop("score")

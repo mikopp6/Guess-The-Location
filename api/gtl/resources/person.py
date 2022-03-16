@@ -130,7 +130,7 @@ class PersonItem(Resource):
         except IntegrityError:
             raise Conflict(description="Already exists")
 
-        return Response(status=200)
+        return Response(status=204)
 
     def delete(self, person):
         """
