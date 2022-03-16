@@ -42,7 +42,7 @@ DL3 fixit:
   
 Korjaa addressability -Miko
 
-pylint-korjaukset (docstringit, ) -Miko
+~~pylint-korjaukset (docstringit, ) -Miko~~
 
 vaihda game validation käyttämään checkeriä regexin sijaan -Santeri
 

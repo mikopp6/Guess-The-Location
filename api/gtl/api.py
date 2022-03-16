@@ -1,4 +1,10 @@
-from tracemalloc import Statistic
+
+"""
+api.py
+
+Used for establishing api blueprint and resource paths.
+"""
+
 from flask import Blueprint
 from flask_restful import Api
 

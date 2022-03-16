@@ -1,14 +1,19 @@
+
+"""
+__init__.py
+Main file for GTL.
+
+create_app based on course example:
+https://lovelace.oulu.fi/ohjelmoitava-web/ohjelmoitava-web/flask-api-project-layout/
+which is based on:
+http://flask.pocoo.org/docs/1.0/tutorial/factory/#the-application-factory
+"""
+
 import os
-import dotenv
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
 
 db = SQLAlchemy()
-
-# Based on course example https://lovelace.oulu.fi/ohjelmoitava-web/ohjelmoitava-web/flask-api-project-layout/,
-# which is based on http://flask.pocoo.org/docs/1.0/tutorial/factory/#the-application-factory
-
 
 def create_app(test_config=None):
     """
@@ -53,5 +58,5 @@ def create_app(test_config=None):
 
     app.register_blueprint(api.api_bp)
 
-    migrate = Migrate(app, db)
+    # migrate = Migrate(app, db)
     return app

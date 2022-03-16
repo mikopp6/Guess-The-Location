@@ -1,0 +1,6 @@
+************* Module gtl.models
+gtl\models.py:1:0: R0401: Cyclic import (gtl -> gtl.models) (cyclic-import)
+
+------------------------------------------------------------------
+Your code has been rated at 9.92/10 (previous run: 9.85/10, +0.08)
+

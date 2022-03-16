@@ -44,3 +44,10 @@ Test coverage:
 `pytest --cov-report term-missing --cov=gtl.resources tests/`
 
 The errors that were found in testing consisted mainly of oversights in model attributes, e.g., missing unique values. Some http errors were also incorrect.
+
+
+### Pylint
+
+Run pylint (in venv)
+
+`pylint .\gtl\ --rcfile=.\gtl\.pylintrc --output=pylint`
