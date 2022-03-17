@@ -40,7 +40,7 @@
 
 DL3 fixit:
   
-Korjaa addressability -Miko
+~~Korjaa addressability -Miko~~
 
 ~~pylint-korjaukset (docstringit, ) -Miko~~
 
@@ -48,11 +48,11 @@ vaihda game validation käyttämään checkeriä regexin sijaan -Santeri
 
 DL4:
 
-- Api document -Santeri (DL 20.03)
+Api document -Santeri (DL 20.03)
 
-- Resource relations (DL 27.03)
+Resource relations (DL 27.03)
 
-- Hypermedia Implementation (DL 27.03)
+Hypermedia Implementation (DL 27.03)
 
 DL5:
 
