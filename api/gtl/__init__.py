@@ -1,4 +1,3 @@
-
 """
 __init__.py
 Main file for GTL.
@@ -12,8 +11,11 @@ http://flask.pocoo.org/docs/1.0/tutorial/factory/#the-application-factory
 import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
+from flasgger import Swagger, swag_from
 
 db = SQLAlchemy()
+
 
 def create_app(test_config=None):
     """
@@ -59,4 +61,13 @@ def create_app(test_config=None):
     app.register_blueprint(api.api_bp)
 
     # migrate = Migrate(app, db)
+    migrate = Migrate(app, db)
+
+    app.config["SWAGGER"] = {
+        "title": "Guess The Location API",
+        "openapi": "3.0.3",
+        "uiversion": 3,
+    }
+    swagger = Swagger(app, template_file="doc/gtl.yml")
+
     return app

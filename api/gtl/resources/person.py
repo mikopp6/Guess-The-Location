@@ -13,15 +13,17 @@ from gtl.models import Person
 
 JSON = "application/json"
 
+
 class PersonCollection(Resource):
-    '''
+    """
     This class implements the PersonCollection resource, which is a
     collection of PersonItems.
     In practice, this contains all persons that may be used in GTL.
 
     Methods: GET, POST
-    Path: /api/persons/ 
-    '''
+    Path: /api/persons/
+    """
+
     def get(self):
         """
         GET-method for the whole PersonCollection, containing all PersonItems.
@@ -79,13 +81,14 @@ class PersonCollection(Resource):
 
 
 class PersonItem(Resource):
-    '''
+    """
     This class implements the PersonItem resource.
     In practice, a single Persons contains a person for use in GTL.
 
     Methods: GET, PUT, DELETE
     Path: /api/persons/<person:person>/
-    '''
+    """
+
     def get(self, person):
         """
         GET-method for PersonItem-class, used for retrieving a PersonItem.
@@ -98,13 +101,13 @@ class PersonItem(Resource):
         """
         body = person.serialize()
         return Response(json.dumps(body), 200, mimetype=JSON)
-    
+
     def put(self, person):
         """
         PUT-method for PersonItem-class, used for modifying a PersonItem.
 
         Input: PersonItem to be modified.
-        Output: If resource found: Flask Response 200 OK,
+        Output: If resource found: Flask Response 204 OK,
                 containing the PersonItem in json-form.
                 If not: 404 Not Found.
         Exceptions: 415 UnsupportedMediaType
@@ -146,10 +149,12 @@ class PersonItem(Resource):
 
         return Response(status=204)
 
+
 class PersonConverter(BaseConverter):
     """
     URL converter used both in PersonCollection and PersonItem.
     """
+
     def to_python(self, person_id):
         db_person = Person.query.filter_by(id=person_id).first()
         if db_person is None:

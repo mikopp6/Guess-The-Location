@@ -1,0 +1,454 @@
+openapi: 3.0.3
+info:
+  title: Guess The Location
+  description: Guess The Location API documentation.
+  contact:
+    name: API Support
+    url: 'http://www.gtl.com/support'
+    email: support@gtl.com
+  version: 0.0.1
+paths:
+  /api/games/:
+    parameters: []
+    get:
+      description: Get the list of played games.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlayedGames'
+              examples:
+                Example:
+                  value:
+                    items:
+                      - player_name: AAA
+                        score: 6647
+                        timestamp: '2022-03-15T15:12:41.988221'
+                        game_type: 1
+                      - player_name: BBB
+                        score: 2891
+                        timestamp: '2022-03-15T15:12:41.988221'
+                        game_type: 2
+                      - player_name: CCC
+                        score: 528
+                        timestamp: '2022-03-15T15:12:41.988221'
+                        game_type: 3
+      summary: ''
+      tags:
+        - GameCollection
+      operationId: get-playedgames
+    post:
+      summary: ''
+      operationId: post-api-games
+      responses:
+        '201':
+          $ref: '#/components/responses/Created'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '405':
+          $ref: '#/components/responses/MethodNowAllowed'
+        '409':
+          $ref: '#/components/responses/Conflict'
+      description: Add new played game.
+      tags:
+        - GameCollection
+  '/api/games/{id}':
+    parameters:
+      - schema:
+          type: integer
+        name: id
+        in: path
+        required: true
+        description: Game ID
+    get:
+      summary: ''
+      tags:
+        - GameItem
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlayedGames'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      operationId: get-api-games-id
+      description: Get single played game by ID.
+    put:
+      summary: ''
+      operationId: put-api-games-id
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '415':
+          $ref: '#/components/responses/UnsupportedMediaType'
+      description: Edit the played game by ID.
+      tags:
+        - GameItem
+    delete:
+      summary: ''
+      operationId: delete-api-games-id
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      description: Delete single played game by ID.
+      tags:
+        - GameItem
+  '/api/location/{id}':
+    parameters:
+      - schema:
+          type: integer
+        name: id
+        in: path
+        required: true
+        description: Location ID
+    get:
+      summary: ''
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      operationId: get-api-location-id
+      description: Get the location by ID
+      tags:
+        - LocationItem
+    put:
+      summary: ''
+      operationId: put-api-location-id
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '415':
+          $ref: '#/components/responses/UnsupportedMediaType'
+      tags:
+        - LocationItem
+      description: Edit the location by ID
+    delete:
+      summary: ''
+      operationId: delete-api-location-id
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      tags:
+        - LocationItem
+      description: Delete the location by ID
+  /api/locations/:
+    get:
+      description: Get the list of locations.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Location'
+              examples:
+                Example:
+                  value:
+                    items:
+                      - image_path: lighthouse.jpg
+                        country_name: Finland
+                        town_name: Oulu
+                        person_id: 1
+                      - image_path: buildings.jpg
+                        country_name: USA
+                        town_name: Massachusetts
+                        person_id: 1
+                      - image_path: church.jpg
+                        country_name: Russia
+                        town_name: Moscow
+                        person_id: 1
+      operationId: get-locations
+      summary: ''
+      tags:
+        - LocationCollection
+    parameters: []
+    post:
+      summary: ''
+      operationId: ''
+      responses:
+        '201':
+          $ref: '#/components/responses/Created'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '405':
+          $ref: '#/components/responses/MethodNowAllowed'
+        '409':
+          $ref: '#/components/responses/Conflict'
+      description: Add new LocationItem.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Location'
+            examples:
+              Example:
+                value:
+                  image_path: example.jpg
+                  country_name: Finland
+                  town_name: Oulu
+                  person_id: 1
+        description: ''
+      tags:
+        - LocationCollection
+  /api/persons/:
+    get:
+      summary: ''
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Person'
+              examples:
+                Example:
+                  value:
+                    items:
+                      - email: thisismy@email.com
+                        password: exampleofastrongpasswordthisisnt
+                        locations:
+                          - image_path: lighthouse.jpg
+                            country_name: Finland
+                            town_name: Oulu
+                            person_id: 1
+                      - email: thisisnotmy@email.com
+                        password: exampleofanevenstrongerpasswordthisisnt
+                        locations: []
+                      - email: thisusedtobemy@email.com
+                        password: exampleofthestrongestpasswordintheworldthisisnt
+                        locations: []
+      operationId: get-persons
+      description: Get the list of persons.
+      tags:
+        - PersonCollection
+    parameters: []
+    post:
+      summary: ''
+      operationId: post-api-persons
+      responses:
+        '201':
+          $ref: '#/components/responses/Created'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '405':
+          $ref: '#/components/responses/MethodNowAllowed'
+        '409':
+          $ref: '#/components/responses/Conflict'
+      tags:
+        - PersonCollection
+  '/api/persons/{id}':
+    parameters:
+      - schema:
+          type: integer
+        name: id
+        in: path
+        required: true
+        description: Person ID
+    get:
+      summary: ''
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Person'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      operationId: get-api-persons-id
+      tags:
+        - PersonItem
+    put:
+      summary: ''
+      operationId: put-api-persons-id
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '415':
+          $ref: '#/components/responses/UnsupportedMediaType'
+      tags:
+        - PersonItem
+    delete:
+      summary: ''
+      operationId: delete-api-persons-id
+      responses:
+        '204':
+          $ref: '#/components/responses/NoContent'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      tags:
+        - PersonItem
+components:
+  schemas:
+    Location:
+      type: object
+      title: Location
+      properties:
+        image_path:
+          type: string
+        country_name:
+          type: string
+        town_name:
+          type: string
+        person_id:
+          type: integer
+      x-examples:
+        Example:
+          image_path: buildings.jpg
+          country_name: USA
+          town_name: Massachusetts
+          person_id: 1
+    PlayedGames:
+      title: PlayedGames
+      type: object
+      properties:
+        player_name:
+          type: string
+        score:
+          type: integer
+        timestamp:
+          type: string
+          format: date-time
+        game_type:
+          type: integer
+      x-examples:
+        example-1:
+          player_name: AAA
+          score: 6647
+          timestamp: '2022-03-15T15:12:41.988221'
+          game_type: 1
+    Person:
+      title: Person
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+        locations:
+          type: array
+          items: {}
+  parameters: {}
+  responses:
+    BadRequest:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+          examples:
+            Example:
+              value:
+                message: The browser (or proxy) sent a request that this server could not understand.
+    MethodNowAllowed:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+          examples:
+            Example:
+              value:
+                message: The method is not allowed for the requested URL.
+    Conflict:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+          examples:
+            Example:
+              value:
+                message: Already exists
+    Created:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+          examples: {}
+    UnsupportedMediaType:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+          examples:
+            Example:
+              value:
+                message: The server does not support the media type transmitted in the request.
+    NotFound:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+          examples:
+            example-1:
+              value:
+                message: Not Found
+    NoContent:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+          examples: {}
+tags:
+  - description: Implements the GameCollection resource, which is a collection of GameItems.
+    name: GameCollection
+  - description: Implements the GameItem resource. 
+    name: GameItem
+  - description: Implements the LocationCollection resource, which is a collection of LocationItems.
+    name: LocationCollection
+  - description: Implements the LocationItem resource.
+    name: LocationItem
+  - description: Implements the PersonCollection resource, which is a collection of PersonItems.
+    name: PersonCollection
+  - description: Implements the PersonItem resource.
+    name: PersonItem
