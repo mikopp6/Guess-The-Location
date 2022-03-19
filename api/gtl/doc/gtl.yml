@@ -23,14 +23,14 @@ paths:
                 Example:
                   value:
                     items:
-                      - player_name: AAA
-                        score: 6647
-                        timestamp: '2022-03-15T15:12:41.988221'
-                        game_type: 1
                       - player_name: BBB
                         score: 2891
                         timestamp: '2022-03-15T15:12:41.988221'
                         game_type: 2
+                      - player_name: AAA
+                        score: 6647
+                        timestamp: '2022-03-15T15:12:41.988221'
+                        game_type: 1
                       - player_name: CCC
                         score: 528
                         timestamp: '2022-03-15T15:12:41.988221'
@@ -308,6 +308,36 @@ paths:
           $ref: '#/components/responses/NotFound'
       tags:
         - PersonItem
+  /api/statistics/:
+    get:
+      summary: ''
+      tags:
+        - Statistics
+      responses:
+        '200':
+          description: OK
+      operationId: get-api-statistics
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+            examples:
+              Example:
+                value:
+                  items:
+                    - game_type: 1
+                      player_name: AAA
+                      score: 6647
+                      timestamp: '2022-03-15T15:12:41.988221'
+                    - game_type: 2
+                      player_name: BBB
+                      score: 2891
+                      timestamp: '2022-03-15T15:12:41.988221'
+                    - game_type: 3
+                      player_name: CCC
+                      score: 528
+                      timestamp: '2022-03-15T15:12:41.988221'
 components:
   schemas:
     Location:
@@ -440,15 +470,17 @@ components:
             type: object
           examples: {}
 tags:
-  - description: Implements the GameCollection resource, which is a collection of GameItems.
+  - description: 'Implements the GameCollection resource, which is a collection of GameItems.'
     name: GameCollection
-  - description: Implements the GameItem resource. 
+  - description: Implements the GameItem resource.
     name: GameItem
-  - description: Implements the LocationCollection resource, which is a collection of LocationItems.
+  - description: 'Implements the LocationCollection resource, which is a collection of LocationItems.'
     name: LocationCollection
   - description: Implements the LocationItem resource.
     name: LocationItem
-  - description: Implements the PersonCollection resource, which is a collection of PersonItems.
+  - description: 'Implements the PersonCollection resource, which is a collection of PersonItems.'
     name: PersonCollection
   - description: Implements the PersonItem resource.
     name: PersonItem
+  - description: 'Implements the Statistic resource, which is a collection of GameItems sorted in different ways..'
+    name: Statistics
