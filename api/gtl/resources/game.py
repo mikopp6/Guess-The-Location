@@ -2,8 +2,7 @@ import json
 
 from flask import Response, request, url_for
 from flask_restful import Resource
-from werkzeug.exceptions import BadRequest, UnsupportedMediaType, NotFound
-from werkzeug.routing import BaseConverter
+from werkzeug.exceptions import BadRequest, UnsupportedMediaType
 
 from jsonschema import validate, ValidationError, draft7_format_checker
 
@@ -14,14 +13,15 @@ JSON = "application/json"
 
 
 class GameCollection(Resource):
-    '''
+    """
     This class implements the GameCollection resource, which is a
     collection of GameItems.
     In practice, this contains all submitted games of GTL.
 
     Methods: GET, POST
-    Path: /api/games/ 
-    '''
+    Path: /api/games/
+    """
+
     def get(self):
         """
         GET-method for the whole GameCollection, containing all GameItems.
@@ -75,13 +75,14 @@ class GameCollection(Resource):
 
 
 class GameItem(Resource):
-    '''
+    """
     This class implements the GameItem resource.
     In practice, a single GameItem contains a submitted game of GTL.
 
     Methods: GET, PUT, DELETE
     Path: /api/games/<game:game>/
-    '''
+    """
+
     def get(self, game):
         """
         GET-method for GameItem-class, used for retrieving a GameItem.
@@ -138,18 +139,3 @@ class GameItem(Resource):
         db.session.commit()
 
         return Response(status=204)
-
-
-class GameConverter(BaseConverter):
-    """
-    URL converter used both in GameCollection and GameItem.
-    """
-    def to_python(self, game_id):
-        db_game = PlayedGame.query.filter_by(id=game_id).first()
-        if db_game is None:
-            raise NotFound
-        db_game.id = str(db_game.id)
-        return db_game
-
-    def to_url(self, db_game):
-        return str(db_game.id)

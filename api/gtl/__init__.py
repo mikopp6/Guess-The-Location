@@ -12,7 +12,7 @@ import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from flasgger import Swagger, swag_from
+from flasgger import Swagger
 
 db = SQLAlchemy()
 
@@ -50,24 +50,23 @@ def create_app(test_config=None):
     app.cli.add_command(models.init_db_command)
     app.cli.add_command(models.generate_test_data)
 
-    from gtl.resources.location import LocationConverter
-    from gtl.resources.game import GameConverter
-    from gtl.resources.person import PersonConverter
+    from gtl.utils import LocationConverter
+    from gtl.utils import GameConverter
+    from gtl.utils import PersonConverter
 
     app.url_map.converters["location"] = LocationConverter
     app.url_map.converters["game"] = GameConverter
     app.url_map.converters["person"] = PersonConverter
-
     app.register_blueprint(api.api_bp)
 
     # migrate = Migrate(app, db)
-    migrate = Migrate(app, db)
+    Migrate(app, db)
 
     app.config["SWAGGER"] = {
         "title": "Guess The Location API",
         "openapi": "3.0.3",
         "uiversion": 3,
     }
-    swagger = Swagger(app, template_file="doc/gtl.yml")
+    Swagger(app, template_file="doc/gtl.yml")
 
     return app

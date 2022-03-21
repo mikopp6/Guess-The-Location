@@ -10,6 +10,7 @@ from flask.cli import with_appcontext
 
 from gtl import db
 
+
 class PlayedGame(db.Model):
     """
     This class is for a single game of GTL.

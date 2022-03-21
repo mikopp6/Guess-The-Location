@@ -13,6 +13,7 @@ from gtl import create_app, db
 #   https://github.com/enkwolf/pwp-course-sensorhub-api-example/blob/master/tests/resource_test.py
 #   https://lovelace.oulu.fi/ohjelmoitava-web/ohjelmoitava-web/testing-flask-applications-part-2/
 
+
 @pytest.fixture
 def client():
     db_fd, db_fname = tempfile.mkstemp()
@@ -35,12 +36,13 @@ def _populate_db():
     for i in range(0, 10):
         s = PlayedGame(
             player_name=names[i],
-            score=(100*(i+1)),
+            score=(100 * (i + 1)),
             timestamp=datetime.datetime.utcnow(),
-            game_type=randint(0, 3)
+            game_type=randint(0, 3),
         )
         db.session.add(s)
     db.session.commit()
+
 
 def _get_game_json():
     """
@@ -54,6 +56,7 @@ def _get_game_json():
         "game_type": 1,
     }
 
+
 class TestGameCollection(object):
     """
     This class implements tests for each HTTP method in the games collection
@@ -65,7 +68,7 @@ class TestGameCollection(object):
     def test_get(self, client):
         """
         Tests the GET method. Checks that the response status code is 200, and
-        then checks that the number of items is correct, and that all of the 
+        then checks that the number of items is correct, and that all of the
         expected attributes are present.
         """
         resp = client.get(self.RESOURCE_URL)
@@ -77,17 +80,17 @@ class TestGameCollection(object):
             assert "score" in item
             assert "timestamp" in item
             assert "game_type" in item
-    
+
     def test_post(self, client):
         """
         Tests the POST method. Checks all of the possible error codes, and
         also checks that a valid request receives a 201 response with a
         location header that leads into the newly created resource.
-        Checks that all attributes are present in this new resource. 
+        Checks that all attributes are present in this new resource.
         """
 
         valid = _get_game_json()
-        valid_object_id = "11"
+        valid_object_id = "GPv39"
         # test with wrong content type
         resp = client.post(self.RESOURCE_URL, data=json.dumps(valid))
         assert resp.status_code == 415
@@ -95,7 +98,9 @@ class TestGameCollection(object):
         # test with valid and see that it exists afterward
         resp = client.post(self.RESOURCE_URL, json=valid)
         assert resp.status_code == 201
-        assert resp.headers["Location"].endswith(self.RESOURCE_URL + valid_object_id + "/")
+        assert resp.headers["Location"].endswith(
+            self.RESOURCE_URL + valid_object_id + "/"
+        )
         resp = client.get(resp.headers["Location"])
         assert resp.status_code == 200
         body = json.loads(resp.data)
@@ -109,9 +114,10 @@ class TestGameCollection(object):
         resp = client.post(self.RESOURCE_URL, json=valid)
         assert resp.status_code == 400
 
+
 class TestGameItem(object):
 
-    RESOURCE_URL = "/api/games/1/"
+    RESOURCE_URL = "/api/games/G73a9/"
     INVALID_URL = "/api/games/x/"
 
     def test_get(self, client):
@@ -128,7 +134,7 @@ class TestGameItem(object):
         assert body["score"] == 100
         # assert body["timestamp"] == time ??, idk not necessary to test this
         assert body["game_type"] == 1 or 2 or 3
-        
+
         # test invalid url
         resp = client.get(self.INVALID_URL)
         assert resp.status_code == 404
@@ -174,6 +180,7 @@ class TestGameItem(object):
         resp = client.delete(self.INVALID_URL)
         assert resp.status_code == 404
 
+
 class TestStatistic(object):
     """
     This class implements tests for each HTTP method in the statistic
@@ -185,7 +192,7 @@ class TestStatistic(object):
     def test_get(self, client):
         """
         Tests the GET method. Checks that the response status code is 200, and
-        then checks that the number of items is correct, and that all of the 
+        then checks that the number of items is correct, and that all of the
         expected attributes are present, and in correct order.
         """
         resp = client.get(self.RESOURCE_URL)

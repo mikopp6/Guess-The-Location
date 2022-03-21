@@ -11,6 +11,7 @@ from gtl import create_app, db
 #   https://github.com/enkwolf/pwp-course-sensorhub-api-example/blob/master/tests/resource_test.py
 #   https://lovelace.oulu.fi/ohjelmoitava-web/ohjelmoitava-web/testing-flask-applications-part-2/
 
+
 @pytest.fixture
 def client():
     db_fd, db_fname = tempfile.mkstemp()
@@ -64,7 +65,7 @@ class TestLocationCollection(object):
     def test_get(self, client):
         """
         Tests the GET method. Checks that the response status code is 200, and
-        then checks that the number of items is correct, and that all of the 
+        then checks that the number of items is correct, and that all of the
         expected attributes are present.
         """
         resp = client.get(self.RESOURCE_URL)
@@ -86,7 +87,7 @@ class TestLocationCollection(object):
         """
 
         valid = _get_location_json()
-        valid_object_id = "5"
+        valid_object_id = "p7olP"
 
         # test with wrong content type
         resp = client.post(self.RESOURCE_URL, data=json.dumps(valid))
@@ -95,7 +96,9 @@ class TestLocationCollection(object):
         # test with valid and see that it exists afterward
         resp = client.post(self.RESOURCE_URL, json=valid)
         assert resp.status_code == 201
-        assert resp.headers["Location"].endswith(self.RESOURCE_URL + valid_object_id + "/")
+        assert resp.headers["Location"].endswith(
+            self.RESOURCE_URL + valid_object_id + "/"
+        )
         resp = client.get(resp.headers["Location"])
         assert resp.status_code == 200
         body = json.loads(resp.data)
@@ -113,9 +116,10 @@ class TestLocationCollection(object):
         resp = client.post(self.RESOURCE_URL, json=valid)
         assert resp.status_code == 400
 
+
 class TestLocationItem(object):
 
-    RESOURCE_URL = "/api/locations/1/"
+    RESOURCE_URL = "/api/locations/G73a9/"
     INVALID_URL = "/api/locations/x/"
 
     def test_get(self, client):
@@ -132,7 +136,7 @@ class TestLocationItem(object):
         assert body["country_name"] == "country0"
         assert body["town_name"] == "town0"
         assert body["person_id"] == 1
-        
+
         # test invalid url
         resp = client.get(self.INVALID_URL)
         assert resp.status_code == 404

@@ -3,25 +3,27 @@ from sqlalchemy.exc import IntegrityError
 
 from flask import Response, request, url_for
 from flask_restful import Resource
-from werkzeug.exceptions import BadRequest, UnsupportedMediaType, Conflict, NotFound
-from werkzeug.routing import BaseConverter
+from werkzeug.exceptions import BadRequest, UnsupportedMediaType, Conflict
 
 from jsonschema import validate, ValidationError, draft7_format_checker
 
 from gtl import db
 from gtl.models import Location
+from gtl.utils import create_hashid, decode_hashid
 
 JSON = "application/json"
 
+
 class LocationCollection(Resource):
-    '''
+    """
     This class implements the LocationCollection resource, which is a
     collection of LocationItems.
     In practice, this contains all locations that may be used in GTL.
 
     Methods: GET, POST
-    Path: /api/locations/ 
-    '''
+    Path: /api/locations/
+    """
+
     def get(self):
         """
         GET-method for the whole LocationCollection, containing all LocationItems.
@@ -79,13 +81,14 @@ class LocationCollection(Resource):
 
 
 class LocationItem(Resource):
-    '''
+    """
     This class implements the LocationItem resource.
     In practice, a single Location contains a location for use in GTL.
 
     Methods: GET, PUT, DELETE
     Path: /api/locations/<location:location>/
-    '''
+    """
+
     def get(self, location):
         """
         GET-method for LocationItem-class, used for retrieving a LocationItem.
@@ -147,17 +150,19 @@ class LocationItem(Resource):
         return Response(status=204)
 
 
-class LocationConverter(BaseConverter):
-    """
-    URL converter used both in LocationCollection and LocationItem.
-    """
-    def to_python(self, location_id):
+# class LocationConverter(BaseConverter):
+#     """
+#     URL converter used both in LocationCollection and LocationItem.
+#     """
 
-        db_location = Location.query.filter_by(id=location_id).first()
-        if db_location is None:
-            raise NotFound
-        db_location.id = str(db_location.id)
-        return db_location
+#     def to_python(self, location_id):
+#         id = decode_hashid(location_id)
+#         db_location = Location.query.filter_by(id=id).first()
+#         if db_location is None:
+#             raise NotFound
+#         db_location.id = str(db_location.id)
+#         return db_location
 
-    def to_url(self, db_location):
-        return str(db_location.id)
+#     def to_url(self, db_location):
+#         test = create_hashid(db_location.id)
+#         return str(db_location.id)

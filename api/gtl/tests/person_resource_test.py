@@ -11,6 +11,7 @@ from gtl import create_app, db
 #   https://github.com/enkwolf/pwp-course-sensorhub-api-example/blob/master/tests/resource_test.py
 #   https://lovelace.oulu.fi/ohjelmoitava-web/ohjelmoitava-web/testing-flask-applications-part-2/
 
+
 @pytest.fixture
 def client():
     db_fd, db_fname = tempfile.mkstemp()
@@ -30,33 +31,28 @@ def client():
 
 def _populate_db():
     for i in range(0, 4):
-        s = Person(
-            email="user{}@gmail.com".format(i),
-            password="hunter{}".format(i)
-        )
+        s = Person(email="user{}@gmail.com".format(i), password="hunter{}".format(i))
         db.session.add(s)
-        
+
     for i in range(0, 8):
         s = Location(
             image_path="testikuva{}.jpg".format(i),
             country_name="country{}".format(i),
             town_name="town{}".format(i),
-            person_id=(i % 3)+1,
+            person_id=(i % 3) + 1,
         )
         print(s.person_id)
         db.session.add(s)
 
     db.session.commit()
 
+
 def _get_person_json():
     """
     Creates a valid person JSON object to be used for PUT and POST tests.
     """
 
-    return {
-        "email": "testi@testi.com",
-        "password": "testi123"
-    }
+    return {"email": "testi@testi.com", "password": "testi123"}
 
 
 class TestPersonCollection(object):
@@ -70,7 +66,7 @@ class TestPersonCollection(object):
     def test_get(self, client):
         """
         Tests the GET method. Checks that the response status code is 200, and
-        then checks that the number of items is correct, and that all of the 
+        then checks that the number of items is correct, and that all of the
         expected attributes are present.
         """
         resp = client.get(self.RESOURCE_URL)
@@ -95,7 +91,7 @@ class TestPersonCollection(object):
         """
 
         valid = _get_person_json()
-        valid_object_id = "5"
+        valid_object_id = "p7olP"
 
         # test with wrong content type
         resp = client.post(self.RESOURCE_URL, data=json.dumps(valid))
@@ -104,7 +100,9 @@ class TestPersonCollection(object):
         # test with valid and see that it exists afterward
         resp = client.post(self.RESOURCE_URL, json=valid)
         assert resp.status_code == 201
-        assert resp.headers["Location"].endswith(self.RESOURCE_URL + valid_object_id + "/")
+        assert resp.headers["Location"].endswith(
+            self.RESOURCE_URL + valid_object_id + "/"
+        )
         resp = client.get(resp.headers["Location"])
         assert resp.status_code == 200
         body = json.loads(resp.data)
@@ -120,10 +118,11 @@ class TestPersonCollection(object):
         resp = client.post(self.RESOURCE_URL, json=valid)
         assert resp.status_code == 400
 
+
 class TestPersonItem(object):
 
-    RESOURCE_URL = "/api/persons/1/"
-    LOCATIONS_RESOURCE_URL = "/api/locations/1/"
+    RESOURCE_URL = "/api/persons/G73a9/"
+    LOCATIONS_RESOURCE_URL = "/api/locations/G73a9/"
     INVALID_URL = "/api/persons/x/"
 
     def test_get(self, client):
@@ -138,7 +137,7 @@ class TestPersonItem(object):
         body = json.loads(resp.data)
         assert body["email"] == "user0@gmail.com"
         assert body["password"] == "hunter0"
-        
+
         # test invalid url
         resp = client.get(self.INVALID_URL)
         assert resp.status_code == 404
@@ -189,7 +188,7 @@ class TestPersonItem(object):
         assert resp.status_code == 404
         resp = client.delete(self.INVALID_URL)
         assert resp.status_code == 404
-        
+
         # check that location associated had its person set to null
         resp = client.get(self.LOCATIONS_RESOURCE_URL)
         body = json.loads(resp.data)

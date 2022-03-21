@@ -2,3 +2,5 @@
 disable=no-member,
         import-outside-toplevel,
         no-self-use
+[FORMAT]
+good-names=id
