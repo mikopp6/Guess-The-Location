@@ -48,7 +48,7 @@ vaihda game validation käyttämään checkeriä regexin sijaan -Santeri
 
 DL4:
 
-Api document -Santeri (DL 20.03)
+~~Api document -Santeri (DL 20.03)~~
 
 Resource relations (DL 27.03)
 
@@ -64,9 +64,9 @@ Muut fixit:
 
 setup.py requirements.txt:n tilalle -Santeri
 
-yhdistä converterit ja laita ne utils.py -Santeri
+~~yhdistä converterit ja laita ne utils.py -Santeri~~
 
-id:t urleista pois tai hashaa ne -Santeri tutkii
+~~id:t urleista pois tai hashaa ne -Santeri tutkii~~
 
 ~~PUT 200 -> 204 -Miko~~
 
