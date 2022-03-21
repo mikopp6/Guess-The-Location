@@ -33,6 +33,13 @@
 
 ## Additional stuff
 
+### Documentation
+
+The documentation can be found at:
+
+/apidocs/
+
+
 ### Testing
 
 Run tests (in venv, inside gtl-folder)
