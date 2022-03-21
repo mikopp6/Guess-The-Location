@@ -310,34 +310,34 @@ paths:
         - PersonItem
   /api/statistics/:
     get:
-      summary: ''
-      tags:
-        - Statistics
+      description: Get the sorted list of played games.
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                Example:
+                  value:
+                    items:
+                      - game_type: 1
+                        player_name: AAA
+                        score: 6647
+                        timestamp: '2022-03-15T15:12:41.988221'
+                      - game_type: 2
+                        player_name: BBB
+                        score: 2891
+                        timestamp: '2022-03-15T15:12:41.988221'
+                      - game_type: 3
+                        player_name: CCC
+                        score: 528
+                        timestamp: '2022-03-15T15:12:41.988221'
+      summary: ''
+      tags:
+        - Statistics
       operationId: get-api-statistics
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            examples:
-              Example:
-                value:
-                  items:
-                    - game_type: 1
-                      player_name: AAA
-                      score: 6647
-                      timestamp: '2022-03-15T15:12:41.988221'
-                    - game_type: 2
-                      player_name: BBB
-                      score: 2891
-                      timestamp: '2022-03-15T15:12:41.988221'
-                    - game_type: 3
-                      player_name: CCC
-                      score: 528
-                      timestamp: '2022-03-15T15:12:41.988221'
 components:
   schemas:
     Location:
@@ -482,5 +482,5 @@ tags:
     name: PersonCollection
   - description: Implements the PersonItem resource.
     name: PersonItem
-  - description: 'Implements the Statistic resource, which is a collection of GameItems sorted in different ways..'
+  - description: 'Implements the Statistic resource, which is a collection of GameItems sorted in different ways.'
     name: Statistics
