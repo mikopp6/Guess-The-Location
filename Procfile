@@ -1,1 +1,1 @@
-web: gunicorn "api:gtl:create_app()"
+web: gunicorn --pythonpath api "gtl:create_app()"
