@@ -72,3 +72,4 @@ setup.py requirements.txt:n tilalle -Santeri
 
 ~~Jos ei oo määritetty psql. Api käyttää sqlite -Santeri~~
 
+kysy tarviiko getin bodyssä olla idtä, jos hypermedia palauttaa linkin itemiin.
