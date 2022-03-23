@@ -50,9 +50,23 @@ DL4:
 
 ~~Api document -Santeri (DL 20.03)~~
 
-Resource relations (DL 27.03)
+~~Resource relations (DL 27.03)~~
 
 Hypermedia Implementation (DL 27.03)
+
+~~Game~~
+
+Location Santeri
+
+Person Miko
+
+Statistic Miko
+
+päivitä gametype wikiin Santeri
+
+lisää hypermedia jutut apidocsiin Santeri
+
+lisää POST apidocsiin pakolliset jutut Santeri
 
 DL5:
 

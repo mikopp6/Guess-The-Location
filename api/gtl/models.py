@@ -22,7 +22,7 @@ class PlayedGame(db.Model):
     player_name = db.Column(db.String(3), nullable=False)
     score = db.Column(db.Integer, nullable=False)
     timestamp = db.Column(db.DateTime, nullable=False)
-    game_type = db.Column(db.Integer)
+    game_type = db.Column(db.Integer, nullable=False)
 
     def serialize(self):
         """
@@ -58,7 +58,7 @@ class PlayedGame(db.Model):
         Defines the json schema of PlayedGame.
         Used for validation in POST and PUT methods.
         """
-        schema = {"type": "object", "required": ["player_name", "score"]}
+        schema = {"type": "object", "required": ["player_name", "score", "timestamp", "game_type"]}
         props = schema["properties"] = {}
         props["player_name"] = {
             "description": "3-letter name of player",
@@ -71,6 +71,7 @@ class PlayedGame(db.Model):
             "type": "string",
             "pattern": r"^\d{4}-[01]\d-[0-3]\d?[T ][0-2]\d:[0-5]\d:[0-5]\d(?:\.\d+)?$",
         }
+        props["game_type"] = {"description": "Type of game", "type": "number"}
         return schema
 
 

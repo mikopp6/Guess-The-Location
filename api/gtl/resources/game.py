@@ -8,6 +8,7 @@ from jsonschema import validate, ValidationError, draft7_format_checker
 
 from gtl import db
 from gtl.models import PlayedGame
+from gtl.utils import GTLBuilder, create_error_response
 
 JSON = "application/json"
 
@@ -31,10 +32,24 @@ class GameCollection(Resource):
                 containing all GameItems in json-form.
         Exceptions: None
         """
-        body = {}
+
+        body = GTLBuilder()
+        body.add_namespace("gtl", "/api/link-relations/")
+        body.add_control("self", url_for("api.gamecollection"))
+        body.add_control_add_game()
+        body.add_control("locations-all", url_for("api.locationcollection"))
+        body.add_control("persons-all", url_for("api.personcollection"))
+        body.add_control(
+            "alternate",
+            url_for("api.statistic"),
+            description="Gamecollection sorted by score, in descending order",
+        )
         body["items"] = []
         for db_game in PlayedGame.query.all():
-            body["items"].append(db_game.serialize())
+            item = GTLBuilder(db_game.serialize())
+            item.add_control("self", url_for("api.gameitem", game=db_game))
+            # item.add_control("profile", SENSOR_PROFILE)
+            body["items"].append(item)
 
         return Response(json.dumps(body), 200, mimetype=JSON)
 
@@ -52,16 +67,18 @@ class GameCollection(Resource):
                     400 BadRequest
         """
         if not request.json:
-            raise UnsupportedMediaType
-
+            return create_error_response(
+                415, "Unsupported media type",
+                "Requests must be JSON"
+            )
         try:
             validate(
                 request.json,
                 PlayedGame.json_schema(),
                 format_checker=draft7_format_checker,
             )
-        except ValidationError as e:
-            raise BadRequest(description=str(e))
+        except ValidationError as e:        
+            return create_error_response(400, "Invalid JSON document", str(e))
 
         game = PlayedGame()
         game.deserialize(request.json)
@@ -93,7 +110,14 @@ class GameItem(Resource):
                 If not: 404 Not Found.
         Exceptions: None
         """
-        body = game.serialize()
+        body = GTLBuilder(game.serialize())
+        body.add_namespace("gtl", "/api/link-relations/")
+        body.add_control("self", url_for("api.gameitem", game=game))
+        # body.add_control("profile", SENSOR_PROFILE)
+        body.add_control("collection", url_for("api.gamecollection"))
+        body.add_control_delete_game(game)
+        body.add_control_modify_game(game)
+
         return Response(json.dumps(body), 200, mimetype=JSON)
 
     def put(self, game):
@@ -108,7 +132,10 @@ class GameItem(Resource):
                     400 BadRequest
         """
         if not request.json:
-            raise UnsupportedMediaType
+            return create_error_response(
+                415, "Unsupported media type",
+                "Requests must be JSON"
+            )
 
         try:
             validate(
@@ -117,10 +144,9 @@ class GameItem(Resource):
                 format_checker=draft7_format_checker,
             )
         except ValidationError as e:
-            raise BadRequest(description=str(e))
+            return create_error_response(400, "Invalid JSON document", str(e))
 
         game.deserialize(request.json)
-
         db.session.commit()
 
         return Response(status=204)
@@ -134,7 +160,6 @@ class GameItem(Resource):
                 If not: 404 Not Found.
         Exceptions: None
         """
-        print(game)
         db.session.delete(game)
         db.session.commit()
 
