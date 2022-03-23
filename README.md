@@ -37,8 +37,7 @@
 
 The documentation can be found at:
 
-/apidocs/
-
+https://gtl-prod.herokuapp.com/apidocs/
 
 ### Testing
 
