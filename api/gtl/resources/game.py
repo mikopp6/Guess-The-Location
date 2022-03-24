@@ -2,7 +2,6 @@ import json
 
 from flask import Response, request, url_for
 from flask_restful import Resource
-from werkzeug.exceptions import BadRequest, UnsupportedMediaType
 
 from jsonschema import validate, ValidationError, draft7_format_checker
 
@@ -11,7 +10,7 @@ from gtl.models import PlayedGame
 from gtl.utils import GTLBuilder, create_error_response
 
 JSON = "application/json"
-
+MASON = "application/vnd.mason+json"
 
 class GameCollection(Resource):
     """
@@ -29,7 +28,7 @@ class GameCollection(Resource):
 
         Input: None
         Output: Flask Response with status 200 OK,
-                containing all GameItems in json-form.
+                containing all GameItems in MASON-form.
         Exceptions: None
         """
 
@@ -48,10 +47,10 @@ class GameCollection(Resource):
         for db_game in PlayedGame.query.all():
             item = GTLBuilder(db_game.serialize())
             item.add_control("self", url_for("api.gameitem", game=db_game))
-            # item.add_control("profile", SENSOR_PROFILE)
+            # item.add_control("profile", GAME_PROFILE)
             body["items"].append(item)
 
-        return Response(json.dumps(body), 200, mimetype=JSON)
+        return Response(json.dumps(body), 200, mimetype=MASON)
 
     def post(self):
         """
@@ -106,7 +105,7 @@ class GameItem(Resource):
 
         Input: GameItem to be retrieved.
         Output: If resource found: Flask Response 200 OK,
-                containing the GameItem in json-form.
+                containing the GameItem in MASON-form.
                 If not: 404 Not Found.
         Exceptions: None
         """
@@ -118,7 +117,7 @@ class GameItem(Resource):
         body.add_control_delete_game(game)
         body.add_control_modify_game(game)
 
-        return Response(json.dumps(body), 200, mimetype=JSON)
+        return Response(json.dumps(body), 200, mimetype=MASON)
 
     def put(self, game):
         """

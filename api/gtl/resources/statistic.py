@@ -1,9 +1,11 @@
 import json
 
-from flask import Response
+from flask import Response, url_for
 from flask_restful import Resource
 from gtl.models import PlayedGame
 from sqlalchemy import desc
+
+from gtl.utils import GTLBuilder
 
 JSON = "application/json"
 
@@ -26,9 +28,16 @@ class Statistic(Resource):
                 containing all GameItems in json-form.
         Exceptions: None
         """
-        body = {}
+        body = GTLBuilder()
+        body.add_control(
+            "alternate",
+            url_for("api.gamecollection")
+        )
         body["items"] = []
         for db_game in PlayedGame.query.order_by(desc("score")).all():
-            body["items"].append(db_game.serialize())
+            item = GTLBuilder(db_game.serialize())
+            item.add_control("self", url_for("api.gameitem", game=db_game))
+            # item.add_control("profile", SENSOR_PROFILE)
+            body["items"].append(item)
 
         return Response(json.dumps(body), 200, mimetype=JSON)

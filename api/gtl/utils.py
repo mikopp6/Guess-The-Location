@@ -255,9 +255,20 @@ class GTLBuilder(MasonBuilder):
             "gtl:add-person",
             "Create a new person",
             url_for("api.personcollection"),
-            Location.json_schema(),
+            Person.json_schema(),
         )
-    
+    def add_control_delete_person(self, person):
+        self.add_control_delete(
+            "gtl:delete",
+            "Delete this person",
+            url_for("api.personitem", person=person)
+        )
+    def add_control_modify_person(self, person):
+        self.add_control_put(
+            "Update this person",
+            url_for("api.personitem", person=person),
+            Person.json_schema()
+        )
 
 
 def create_error_response(status_code, title, message=None):

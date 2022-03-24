@@ -58,9 +58,9 @@ Hypermedia Implementation (DL 27.03)
 
 Location Santeri
 
-Person Miko
+~~Person Miko~~
 
-Statistic Miko
+~~Statistic Miko~~
 
 päivitä gametype wikiin Santeri
 
