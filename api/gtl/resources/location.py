@@ -3,15 +3,15 @@ from sqlalchemy.exc import IntegrityError
 
 from flask import Response, request, url_for
 from flask_restful import Resource
-from werkzeug.exceptions import BadRequest, UnsupportedMediaType, Conflict
 
 from jsonschema import validate, ValidationError, draft7_format_checker
 
 from gtl import db
 from gtl.models import Location
-from gtl.utils import create_hashid, decode_hashid
+from gtl.utils import GTLBuilder, create_error_response
 
 JSON = "application/json"
+MASON = "application/vnd.mason+json"
 
 
 class LocationCollection(Resource):
@@ -33,10 +33,18 @@ class LocationCollection(Resource):
                 containing all LocationItems in json-form.
         Exceptions: None
         """
-        body = {}
+        body = GTLBuilder()
+        body.add_namespace("gtl", "/api/link-relations/")
+        body.add_control("self", url_for("api.locationcollection"))
+        body.add_control_add_location()
+        body.add_control("persons-all", url_for("api.personcollection"))
+        body.add_control("games-all", url_for("api.gamecollection"))
         body["items"] = []
         for db_location in Location.query.all():
-            body["items"].append(db_location.serialize())
+            item = GTLBuilder(db_location.serialize())
+            item.add_control("self", url_for("api.locationitem", location=db_location))
+            # item.add_control("profile", LOCATION_PROFILE)
+            body["items"].append(item)
 
         return Response(json.dumps(body), 200, mimetype=JSON)
 
@@ -55,8 +63,9 @@ class LocationCollection(Resource):
                     409 Conflict
         """
         if not request.json:
-            raise UnsupportedMediaType
-
+            return create_error_response(
+                415, "Unsupported media type", "Requests must be JSON"
+            )
         try:
             validate(
                 request.json,
@@ -64,7 +73,7 @@ class LocationCollection(Resource):
                 format_checker=draft7_format_checker,
             )
         except ValidationError as e:
-            raise BadRequest(description=str(e))
+            return create_error_response(400, "Invalid JSON document", str(e))
 
         try:
             location = Location()
@@ -72,7 +81,7 @@ class LocationCollection(Resource):
             db.session.add(location)
             db.session.commit()
         except IntegrityError:
-            raise Conflict(description="Already exists")
+            return create_error_response(409, "Already exists")
 
         return Response(
             status=201,
@@ -99,8 +108,15 @@ class LocationItem(Resource):
                 If not: 404 Not Found.
         Exceptions: None
         """
-        body = location.serialize()
-        return Response(json.dumps(body), 200, mimetype=JSON)
+        body = GTLBuilder(location.serialize())
+        body.add_namespace("gtl", "/api/link-relations/")
+        body.add_control("self", url_for("api.locationitem", location=location))
+        # body.add_control("profile", SENSOR_PROFILE)
+        body.add_control("collection", url_for("api.locationcollection"))
+        body.add_control_delete_location(location)
+        body.add_control_modify_location(location)
+
+        return Response(json.dumps(body), 200, mimetype=MASON)
 
     def put(self, location):
         """
@@ -115,7 +131,9 @@ class LocationItem(Resource):
                     409 Conflict
         """
         if not request.json:
-            raise UnsupportedMediaType
+            return create_error_response(
+                415, "Unsupported media type", "Requests must be JSON"
+            )
 
         try:
             validate(
@@ -124,14 +142,14 @@ class LocationItem(Resource):
                 format_checker=draft7_format_checker,
             )
         except ValidationError as e:
-            raise BadRequest(description=str(e))
+            return create_error_response(400, "Invalid JSON document", str(e))
 
         location.deserialize(request.json)
 
         try:
             db.session.commit()
         except IntegrityError:
-            raise Conflict(description="Already exists")
+            return create_error_response(409, "Already exists")
 
         return Response(status=204)
 
@@ -148,21 +166,3 @@ class LocationItem(Resource):
         db.session.commit()
 
         return Response(status=204)
-
-
-# class LocationConverter(BaseConverter):
-#     """
-#     URL converter used both in LocationCollection and LocationItem.
-#     """
-
-#     def to_python(self, location_id):
-#         id = decode_hashid(location_id)
-#         db_location = Location.query.filter_by(id=id).first()
-#         if db_location is None:
-#             raise NotFound
-#         db_location.id = str(db_location.id)
-#         return db_location
-
-#     def to_url(self, db_location):
-#         test = create_hashid(db_location.id)
-#         return str(db_location.id)

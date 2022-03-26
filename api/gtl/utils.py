@@ -230,24 +230,39 @@ class GTLBuilder(MasonBuilder):
             url_for("api.gamecollection"),
             PlayedGame.json_schema(),
         )
+
     def add_control_delete_game(self, game):
         self.add_control_delete(
-            "gtl:delete",
-            "Delete this game",
-            url_for("api.gameitem", game=game)
+            "gtl:delete", "Delete this game", url_for("api.gameitem", game=game)
         )
+
     def add_control_modify_game(self, game):
         self.add_control_put(
             "Update this game",
             url_for("api.gameitem", game=game),
-            PlayedGame.json_schema()
+            PlayedGame.json_schema(),
         )
+
     def add_control_add_location(self):
         self.add_control_post(
             "gtl:add-location",
             "Create a new location",
             url_for("api.locationcollection"),
             Location.json_schema(),
+        )
+
+    def add_control_delete_location(self, location):
+        self.add_control_delete(
+            "gtl:delete",
+            "Delete this location",
+            url_for("api.locationitem", location=location),
+        )
+
+    def add_control_modify_location(self, location):
+        self.add_control_put(
+            "Update this location",
+            url_for("api.locationitem", location=location),
+            Person.json_schema(),
         )
 
     def add_control_add_person(self):
@@ -257,17 +272,17 @@ class GTLBuilder(MasonBuilder):
             url_for("api.personcollection"),
             Person.json_schema(),
         )
+
     def add_control_delete_person(self, person):
         self.add_control_delete(
-            "gtl:delete",
-            "Delete this person",
-            url_for("api.personitem", person=person)
+            "gtl:delete", "Delete this person", url_for("api.personitem", person=person)
         )
+
     def add_control_modify_person(self, person):
         self.add_control_put(
             "Update this person",
             url_for("api.personitem", person=person),
-            Person.json_schema()
+            Person.json_schema(),
         )
 
 
