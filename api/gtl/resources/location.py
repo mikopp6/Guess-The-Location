@@ -7,7 +7,7 @@ from flask_restful import Resource
 from jsonschema import validate, ValidationError, draft7_format_checker
 
 from gtl import db
-from gtl.models import Location
+from gtl.models import Location, Person
 from gtl.utils import GTLBuilder, create_error_response
 
 JSON = "application/json"
@@ -43,7 +43,10 @@ class LocationCollection(Resource):
         for db_location in Location.query.all():
             item = GTLBuilder(db_location.serialize())
             item.add_control("self", url_for("api.locationitem", location=db_location))
-            # item.add_control("profile", LOCATION_PROFILE)
+            person_id = Person.query.filter_by(id=item["person_id"]).first()
+            if person_id:
+                GTLBuilder(person_id.serialize())
+                item.add_control("author", url_for("api.personitem", person=person_id))
             body["items"].append(item)
 
         return Response(json.dumps(body), 200, mimetype=MASON)
@@ -111,6 +114,10 @@ class LocationItem(Resource):
         body = GTLBuilder(location.serialize())
         body.add_namespace("gtl", "/api/link-relations/")
         body.add_control("self", url_for("api.locationitem", location=location))
+        person_id = Person.query.filter_by(id=body["person_id"]).first()
+        if person_id:
+            GTLBuilder(person_id.serialize())
+            body.add_control("author", url_for("api.personitem", person=person_id))
         # body.add_control("profile", SENSOR_PROFILE)
         body.add_control("collection", url_for("api.locationcollection"))
         body.add_control_delete_location(location)
