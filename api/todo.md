@@ -56,17 +56,17 @@ Hypermedia Implementation (DL 27.03)
 
 ~~Game~~
 
-Location Santeri
+~~Location Santeri~~
 
 ~~Person Miko~~
 
 ~~Statistic Miko~~
 
-päivitä gametype wikiin Santeri
+~~päivitä gametype wikiin Santeri~~
 
-lisää hypermedia jutut apidocsiin Santeri
+~~lisää hypermedia jutut apidocsiin Santeri~~
 
-lisää POST apidocsiin pakolliset jutut Santeri
+~~lisää POST apidocsiin pakolliset jutut Santeri~~
 
 DL5:
 

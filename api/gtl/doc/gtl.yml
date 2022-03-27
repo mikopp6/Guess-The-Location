@@ -9,32 +9,48 @@ info:
   version: 0.0.1
 paths:
   /api/games/:
-    parameters: []
     get:
       description: Get the list of played games.
       responses:
         '200':
           description: OK
           content:
-            application/json:
+            application/vnd.mason+json:
               schema:
                 $ref: '#/components/schemas/PlayedGames'
               examples:
                 Example:
                   value:
+                    '@controls':
+                      self:
+                        href: /api/games/
+                      'gtl:add-game':
+                        method: POST
+                        encoding: json
+                        title: Create a new game
+                        href: /api/games/
+                        schema:
+                          $ref: '#/components/schemas/PlayedGames'
+                      locations-all:
+                        href: /api/locations/
+                      persons-all:
+                        href: /api/persons/
+                      alternate:
+                        description: 'Gamecollection sorted by score, in descending order'
+                        href: /api/statistics/
                     items:
-                      - player_name: BBB
+                      - game_type: 2
+                        player_name: BBB
                         score: 2891
                         timestamp: '2022-03-15T15:12:41.988221'
-                        game_type: 2
-                      - player_name: AAA
+                      - game_type: 1
+                        player_name: AAA
                         score: 6647
                         timestamp: '2022-03-15T15:12:41.988221'
-                        game_type: 1
-                      - player_name: CCC
+                      - game_type: 3
+                        player_name: CCC
                         score: 528
                         timestamp: '2022-03-15T15:12:41.988221'
-                        game_type: 3
       summary: ''
       tags:
         - GameCollection
@@ -54,28 +70,20 @@ paths:
       description: Add new played game.
       tags:
         - GameCollection
+      parameters: []
       requestBody:
+        required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/PlayedGames'
-            examples:
-              Example:
-                value:
-                  player_name: string
-                  score: 0
-                  timestamp: '2019-08-24T14:15:22Z'
-                  game_type: 0
-        description: ''
-      parameters: []
   '/api/games/{id}':
     parameters:
       - schema:
-          type: integer
+          type: string
         name: id
         in: path
         required: true
-        description: Game ID
     get:
       summary: ''
       tags:
@@ -84,9 +92,33 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/vnd.mason+json:
               schema:
                 $ref: '#/components/schemas/PlayedGames'
+              examples:
+                Example:
+                  value:
+                    items:
+                      - player_name: BBB
+                        score: 2891
+                        timestamp: '2022-03-15T15:12:41.988221'
+                        game_type: 2
+                    '@controls':
+                      self:
+                        href: '/api/games/{id}/'
+                      collection:
+                        href: /api/games/
+                      gtl-delete:
+                        method: Delete
+                        title: Delete this game
+                        href: '/api/games/{id}/'
+                      edit:
+                        method: PUT
+                        encoding: json
+                        title: Update this game
+                        href: '/api/games/{id}/'
+                        schema:
+                          $ref: '#/components/schemas/PlayedGames'
         '404':
           $ref: '#/components/responses/NotFound'
       operationId: get-api-games-id
@@ -125,20 +157,43 @@ paths:
   '/api/location/{id}':
     parameters:
       - schema:
-          type: integer
+          type: string
         name: id
         in: path
         required: true
-        description: Location ID
     get:
       summary: ''
       responses:
         '200':
           description: OK
           content:
-            application/json:
+            application/vnd.mason+json:
               schema:
                 $ref: '#/components/schemas/Location'
+              examples:
+                Example:
+                  value:
+                    items:
+                      - image_path: lighthouse.jpg
+                        country_name: Finland
+                        town_name: Oulu
+                        person_id: 1
+                    '@controls':
+                      self:
+                        href: '/api/locations/{id}/'
+                      collection:
+                        href: /api/locations/
+                      gtl-delete:
+                        method: Delete
+                        title: Delete this location
+                        href: '/api/locations/{id}/'
+                      edit:
+                        method: PUT
+                        encoding: json
+                        title: Update this location
+                        href: '/api/locations/{id}/'
+                        schema:
+                          $ref: '#/components/schemas/Location'
         '404':
           $ref: '#/components/responses/NotFound'
       operationId: get-api-location-id
@@ -185,13 +240,27 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/vnd.mason+json:
               schema:
                 items:
                   $ref: '#/components/schemas/Location'
               examples:
                 Example:
                   value:
+                    '@controls':
+                      self:
+                        href: /api/locations/
+                      'gtl:add-location':
+                        method: POST
+                        encoding: json
+                        title: Create a new location
+                        href: /api/games/
+                        schema:
+                          $ref: '#/components/schemas/Location'
+                      games-all:
+                        href: /api/games/
+                      persons-all:
+                        href: /api/persons/
                     items:
                       - image_path: lighthouse.jpg
                         country_name: Finland
@@ -223,31 +292,14 @@ paths:
         '409':
           $ref: '#/components/responses/Conflict'
       description: Add new LocationItem.
+      tags:
+        - LocationCollection
       requestBody:
+        required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/Location'
-            examples:
-              Example:
-                value:
-                  image_path: example.jpg
-                  country_name: Finland
-                  town_name: Oulu
-                  person_id: 1
-          application/xml:
-            schema:
-              type: object
-              properties: {}
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Location'
-            examples:
-              Example:
-                value: {}
-        description: ''
-      tags:
-        - LocationCollection
   /api/persons/:
     get:
       summary: ''
@@ -255,12 +307,26 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/vnd.mason+json:
               schema:
                 $ref: '#/components/schemas/Person'
               examples:
                 Example:
                   value:
+                    '@controls':
+                      self:
+                        href: /api/persons/
+                      'gtl:add-persons':
+                        method: POST
+                        encoding: json
+                        title: Create a new person
+                        href: /api/persons/
+                        schema:
+                          $ref: '#/components/schemas/Person'
+                      locations-all:
+                        href: /api/locations/
+                      games-all:
+                        href: /api/games/
                     items:
                       - email: thisismy@email.com
                         password: exampleofastrongpasswordthisisnt
@@ -295,6 +361,7 @@ paths:
       tags:
         - PersonCollection
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -318,9 +385,32 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/vnd.mason+json:
               schema:
                 $ref: '#/components/schemas/Person'
+              examples:
+                Example:
+                  value:
+                    items:
+                      - email: thisusedtobemy@email.com
+                        password: exampleofthestrongestpasswordintheworldthisisnt
+                        locations: []
+                    '@controls':
+                      self:
+                        href: '/api/persons/{id}/'
+                      collection:
+                        href: /api/persons/
+                      gtl-delete:
+                        method: Delete
+                        title: Delete this person
+                        href: '/api/persons/{id}/'
+                      edit:
+                        method: PUT
+                        encoding: json
+                        title: Update this person
+                        href: '/api/persons/{id}/'
+                        schema:
+                          $ref: '#/components/schemas/Person'
         '404':
           $ref: '#/components/responses/NotFound'
       operationId: get-api-persons-id
@@ -397,6 +487,12 @@ components:
     Location:
       type: object
       title: Location
+      x-examples:
+        Example:
+          image_path: buildings.jpg
+          country_name: USA
+          town_name: Massachusetts
+          person_id: 1
       properties:
         image_path:
           type: string
@@ -406,15 +502,20 @@ components:
           type: string
         person_id:
           type: integer
-      x-examples:
-        Example:
-          image_path: buildings.jpg
-          country_name: USA
-          town_name: Massachusetts
-          person_id: 1
+      required:
+        - image_path
+        - country_name
+        - town_name
+        - person_id
     PlayedGames:
       title: PlayedGames
       type: object
+      x-examples:
+        Example:
+          player_name: AAA
+          score: 6647
+          timestamp: '2022-03-15T15:12:41.988221'
+          game_type: 1
       properties:
         player_name:
           type: string
@@ -425,12 +526,11 @@ components:
           format: date-time
         game_type:
           type: integer
-      x-examples:
-        example-1:
-          player_name: AAA
-          score: 6647
-          timestamp: '2022-03-15T15:12:41.988221'
-          game_type: 1
+      required:
+        - player_name
+        - score
+        - timestamp
+        - game_type
     Person:
       title: Person
       type: object
@@ -442,6 +542,9 @@ components:
         locations:
           type: array
           items: {}
+      required:
+        - email
+        - password
   parameters: {}
   responses:
     BadRequest:
