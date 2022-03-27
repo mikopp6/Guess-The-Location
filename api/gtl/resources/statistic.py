@@ -8,6 +8,7 @@ from sqlalchemy import desc
 from gtl.utils import GTLBuilder
 
 JSON = "application/json"
+MASON = "application/vnd.mason+json"
 
 class Statistic(Resource):
     '''
@@ -25,7 +26,7 @@ class Statistic(Resource):
 
         Input: None
         Output: Flask Response with status 200 OK,
-                containing all GameItems in json-form.
+                containing all GameItems in MASON-form.
         Exceptions: None
         """
         body = GTLBuilder()
@@ -40,4 +41,4 @@ class Statistic(Resource):
             # item.add_control("profile", SENSOR_PROFILE)
             body["items"].append(item)
 
-        return Response(json.dumps(body), 200, mimetype=JSON)
+        return Response(json.dumps(body), 200, mimetype=MASON)

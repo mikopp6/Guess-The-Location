@@ -128,7 +128,7 @@ class PersonItem(Resource):
                 inside_item.add_control("self", url_for("api.locationitem", location=db_location))
                 # item.add_control("profile", LOCATION_PROFILE)
                 body["locations"][index] = inside_item
-        return Response(json.dumps(body), 200, mimetype=JSON)
+        return Response(json.dumps(body), 200, mimetype=MASON)
 
     def put(self, person):
         """

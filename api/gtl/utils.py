@@ -131,7 +131,7 @@ class MasonBuilder(dict):
             "@messages": [details],
         }
 
-    def add_namespace(self, ns, uri):
+    def add_namespace(self, namespace, uri):
         """
         Adds a namespace element to the object. A namespace defines where our
         link relations are coming from. The URI can be an address where
@@ -143,7 +143,7 @@ class MasonBuilder(dict):
         if "@namespaces" not in self:
             self["@namespaces"] = {}
 
-        self["@namespaces"][ns] = {"name": uri}
+        self["@namespaces"][namespace] = {"name": uri}
 
     def add_control(self, ctrl_name, href, **kwargs):
         """
@@ -224,6 +224,9 @@ class GTLBuilder(MasonBuilder):
     """
 
     def add_control_add_game(self):
+        """
+        Using MasonBuilder, adds hypermedia link to a response for adding a game.
+        """
         self.add_control_post(
             "gtl:add-game",
             "Create a new game",
@@ -232,11 +235,17 @@ class GTLBuilder(MasonBuilder):
         )
 
     def add_control_delete_game(self, game):
+        """
+        Using MasonBuilder, adds hypermedia link to a response for deleting a game.
+        """
         self.add_control_delete(
             "gtl:delete", "Delete this game", url_for("api.gameitem", game=game)
         )
 
     def add_control_modify_game(self, game):
+        """
+        Using MasonBuilder, adds hypermedia link to a response for modifying a game.
+        """
         self.add_control_put(
             "Update this game",
             url_for("api.gameitem", game=game),
@@ -244,6 +253,9 @@ class GTLBuilder(MasonBuilder):
         )
 
     def add_control_add_location(self):
+        """
+        Using MasonBuilder, adds hypermedia link to a response for adding a location.
+        """
         self.add_control_post(
             "gtl:add-location",
             "Create a new location",
@@ -252,6 +264,9 @@ class GTLBuilder(MasonBuilder):
         )
 
     def add_control_delete_location(self, location):
+        """
+        Using MasonBuilder, adds hypermedia link to a response for deleting a location.
+        """
         self.add_control_delete(
             "gtl:delete",
             "Delete this location",
@@ -259,6 +274,9 @@ class GTLBuilder(MasonBuilder):
         )
 
     def add_control_modify_location(self, location):
+        """
+        Using MasonBuilder, adds hypermedia link to a response for modifying a location.
+        """
         self.add_control_put(
             "Update this location",
             url_for("api.locationitem", location=location),
@@ -266,6 +284,9 @@ class GTLBuilder(MasonBuilder):
         )
 
     def add_control_add_person(self):
+        """
+        Using MasonBuilder, adds hypermedia link to a response for adding a person.
+        """
         self.add_control_post(
             "gtl:add-person",
             "Create a new person",
@@ -274,11 +295,17 @@ class GTLBuilder(MasonBuilder):
         )
 
     def add_control_delete_person(self, person):
+        """
+        Using MasonBuilder, adds hypermedia link to a response for deleting a person.
+        """
         self.add_control_delete(
             "gtl:delete", "Delete this person", url_for("api.personitem", person=person)
         )
 
     def add_control_modify_person(self, person):
+        """
+        Using MasonBuilder, adds hypermedia link to a response for modifying a person.
+        """
         self.add_control_put(
             "Update this person",
             url_for("api.personitem", person=person),
