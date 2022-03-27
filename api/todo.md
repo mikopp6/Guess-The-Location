@@ -52,7 +52,7 @@ DL4:
 
 ~~Resource relations (DL 27.03)~~
 
-Hypermedia Implementation (DL 27.03)
+~~Hypermedia Implementation (DL 27.03)~~
 
 ~~Game~~
 

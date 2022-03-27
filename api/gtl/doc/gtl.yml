@@ -174,11 +174,13 @@ paths:
                 Example:
                   value:
                     items:
-                      - image_path: lighthouse.jpg
-                        country_name: Finland
-                        town_name: Oulu
+                      - image_path: church.jpg
+                        country_name: Russia
+                        town_name: Moscow
                         person_id: 1
                     '@controls':
+                      author:
+                        href: '/api/persons/{id}/'
                       self:
                         href: '/api/locations/{id}/'
                       collection:
@@ -266,14 +268,29 @@ paths:
                         country_name: Finland
                         town_name: Oulu
                         person_id: 1
+                        '@controls':
+                          self:
+                            href: '/api/locations/{id}/'
+                          author:
+                            href: '/api/persons/{id}/'
                       - image_path: buildings.jpg
                         country_name: USA
                         town_name: Massachusetts
                         person_id: 1
+                        '@controls':
+                          self:
+                            href: '/api/locations/{id}/'
+                          author:
+                            href: '/api/persons/{id}/'
                       - image_path: church.jpg
                         country_name: Russia
                         town_name: Moscow
                         person_id: 1
+                        '@controls':
+                          self:
+                            href: '/api/locations/{id}/'
+                          author:
+                            href: '/api/persons/{id}/'
       operationId: get-locations
       summary: ''
       tags:
