@@ -12,11 +12,13 @@ authentication - Tehdään myöhemmin.
 
 DL5 Client:
 
-- Client design - Miko
+- Pelin logiikka - Santeri
+- Admin login - Miko
+
+- Tarkista wiki palautus
 
 - Client application description - Miko
-
-- Koodaa clientti - Santeri
+- Kotisivun taustalla oleva kuva on jo pelin eka kuva
 
 
 DL4 korjaukset:
@@ -34,3 +36,4 @@ dokumentaatiot:
 
 hypermedia:
 - gtl: omien määrityksien eteen
+
