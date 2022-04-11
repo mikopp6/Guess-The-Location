@@ -10,7 +10,6 @@ caching - Tarkistetaan myöhemmin, että tehdäänkö.
 authentication - Tehdään myöhemmin.
 
 
-
 DL5 Client:
 
 - Client design - Miko
@@ -19,6 +18,19 @@ DL5 Client:
 
 - Koodaa clientti - Santeri
 
-Tapaaminen:
 
-- link-relations, mitä siinä pitäs olla
+DL4 korjaukset:
+
+dokumentaatiot:
+- yksittäisessä getissä items?
+
+- game, person items selfit puuttuu
+
+- wrong media type puuttuu
+
+- collection post, poista turha 405
+
+- location-header puuttuu posteista
+
+hypermedia:
+- gtl: omien määrityksien eteen
