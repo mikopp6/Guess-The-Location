@@ -10,15 +10,30 @@ caching - Tarkistetaan myöhemmin, että tehdäänkö.
 authentication - Tehdään myöhemmin.
 
 
-
 DL5 Client:
 
-- Client design - Miko
+- Pelin logiikka - Santeri
+- Admin login - Miko
+
+- Tarkista wiki palautus
 
 - Client application description - Miko
+- Kotisivun taustalla oleva kuva on jo pelin eka kuva
 
-- Koodaa clientti - Santeri
 
-Tapaaminen:
+DL4 korjaukset:
 
-- link-relations, mitä siinä pitäs olla
+dokumentaatiot:
+- yksittäisessä getissä items?
+
+- game, person items selfit puuttuu
+
+- wrong media type puuttuu
+
+- collection post, poista turha 405
+
+- location-header puuttuu posteista
+
+hypermedia:
+- gtl: omien määrityksien eteen
+

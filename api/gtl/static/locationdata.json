@@ -9,7 +9,7 @@
     {
       "image_path": "buildings.jpg",
       "country_name": "USA",
-      "town_name": "Massachusetts",
+      "town_name": "Boston",
       "person_id": 1
     },
     {
@@ -25,10 +25,100 @@
       "person_id": 1
     },
     {
+      "image_path": "night_cityscape.jpg",
+      "country_name": "Sweden",
+      "town_name": "Stockholm",
+      "person_id": 2
+    },
+    {
+      "image_path": "day_cityscape.jpg",
+      "country_name": "Norway",
+      "town_name": "Oslo",
+      "person_id": 2
+    },
+    {
+      "image_path": "volcano_city_coastline.jpg",
+      "country_name": "Iceland",
+      "town_name": "Reykjavik",
+      "person_id": 2
+    },
+    {
+      "image_path": "curve_building.jpg",
+      "country_name": "France",
+      "town_name": "Paris",
+      "person_id": 2
+    },
+    {
+      "image_path": "gate.jpg",
+      "country_name": "Germany",
+      "town_name": "Berlin",
+      "person_id": 2
+    },
+    {
+      "image_path": "canal.jpg",
+      "country_name": "Netherlands",
+      "town_name": "Amsterdam",
+      "person_id": 2
+    },
+    {
+      "image_path": "palace.jpg",
+      "country_name": "England",
+      "town_name": "London",
+      "person_id": 2
+    },
+    {
+      "image_path": "highway.jpg",
+      "country_name": "USA",
+      "town_name": "Los Angeles",
+      "person_id": 2
+    },
+    {
+      "image_path": "bridge.jpg",
+      "country_name": "USA",
+      "town_name": "San Francisco",
+      "person_id": 2
+    },
+    {
+      "image_path": "drawbridge.jpg",
+      "country_name": "USA",
+      "town_name": "Chicago",
+      "person_id": 2
+    },
+    {
       "image_path": "operahouse.jpg",
       "country_name": "Australia",
       "town_name": "Sydney",
-      "person_id": 1
+      "person_id": 2
+    },
+    {
+      "image_path": "cathedral.jpg",
+      "country_name": "Finland",
+      "town_name": "Helsinki",
+      "person_id": 2
+    },
+    {
+      "image_path": "stonehenge.jpg",
+      "country_name": "England",
+      "town_name": "Wiltshire",
+      "person_id": 2
+    },
+    {
+      "image_path": "old_structures.jpg",
+      "country_name": "Athens",
+      "town_name": "Greece",
+      "person_id": 2
+    },
+    {
+      "image_path": "monastery.jpg",
+      "country_name": "France",
+      "town_name": "Normandy",
+      "person_id": 2
+    },
+    {
+      "image_path": "arch.jpg",
+      "country_name": "USA",
+      "town_name": "St. Louis",
+      "person_id": 2
     }
   ]
 }
