@@ -1,0 +1,19 @@
+.App, .Home {
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+}
+
+.App::before {
+  /* The image used */
+  content: "";
+  background-image: url(./images/street.jpg);
+  background-size: cover;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  opacity: 0.3;
+  filter: blur(10px);
+}

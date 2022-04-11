@@ -10,6 +10,7 @@ http://flask.pocoo.org/docs/1.0/tutorial/factory/#the-application-factory
 
 import os
 from flask import Flask
+from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flasgger import Swagger
@@ -59,7 +60,6 @@ def create_app(test_config=None):
     app.url_map.converters["person"] = PersonConverter
     app.register_blueprint(api.api_bp)
 
-    # migrate = Migrate(app, db)
     Migrate(app, db)
 
     app.config["SWAGGER"] = {
@@ -68,5 +68,8 @@ def create_app(test_config=None):
         "uiversion": 3,
     }
     Swagger(app, template_file="doc/gtl.yml")
+
+    # Allows to make api requests from the http://localhost:8081 (Client localhost port).
+    CORS(app, resources={r"/api/*": {"origins": "http://localhost:8081"}})
 
     return app
