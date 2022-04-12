@@ -35,6 +35,18 @@ export const theme = createTheme({
                 display: 'flex'
             },
         },
+        MuiDialog: {
+            paper: {
+                backgroundColor: '#ffffff8a',
+            },
+            paperWidthSm: {
+                maxWidth: 438,
+            },
+            container: {
+                height: 'unset',
+            }
+        }
+        // MuiDialog
     }
 })
 

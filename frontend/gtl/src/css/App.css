@@ -17,3 +17,9 @@
   opacity: 0.3;
   filter: blur(10px);
 }
+
+@media only screen and (min-width:2000px) {
+  .Home img {
+    width: 100%;
+  }
+};

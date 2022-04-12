@@ -1,20 +1,12 @@
 import React, { useState, useEffect } from "react"
 import LocationList from '../components/LocationList'
+import FormDialog from '../components/FormDialog'
 import LocationService from "../services/LocationService"
 import ILocation from '../types/Location'
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../theme';
-import { makeStyles } from '@material-ui/core/styles';
+import { Container } from '@material-ui/core'; //importing material ui component
 
-const useStyles = makeStyles(theme => ({
-  image: {
-    position: 'fixed',
-    top: 0,
-    width: '100%',
-    height: '100%',
-    backgroundSize: 'cover'
-  }
-}));
 
 // export interface IGamePageProps {}
 const GamePage: React.FC = () => {
@@ -37,9 +29,10 @@ const GamePage: React.FC = () => {
   console.log(location)
   return (
     <ThemeProvider theme={theme}>
-      <div className="Home">
+      <Container className="Home">
         {fetchIsDone && <LocationList locations={location}/>}
-      </div>
+        <FormDialog/>
+      </Container>
     </ThemeProvider>
 )
 }
