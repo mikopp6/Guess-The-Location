@@ -222,7 +222,9 @@ def generate_test_data():
         },
     ]
     # List names
-    names = ["AAA", "BBB", "CCC", "DDD", "EEE", "FFF", "GGG", "HHH", "III", "JJJ"]
+    names = ["AAA", "BBB", "CCC", "DDD", "EEE", "FFF", "GGG", "HHH", "III", "JJJ",
+    "2AA", "2BB", "2CC", "2DD", "2EE", "2FF", "2GG", "2HH", "2II", "2JJ",
+    "3AA", "3BB", "3CC", "3DD", "3EE", "3FF", "3GG", "3HH", "3II", "3JJ"]
     # List of played games
     games = []
     # Generate list of games from names

@@ -30,7 +30,7 @@ const HomePage: React.FC = () => {
           {showLoginModal &&
             <LogInModal />
           }
-          <HighScoreModal />
+          <HighScoreModal modifiable={false}/>
         </Grid>
       </Container>
     </ThemeProvider>

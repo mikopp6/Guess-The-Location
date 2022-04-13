@@ -12,9 +12,11 @@ const getAll = () => {
 // const update = (id: any, data: ILocation) => {
 //   return http.put<any>(`/locations/${id}`, data);
 // };
-// const remove = (id: any) => {
-//   return http.delete<any>(`/locations/${id}`);
-// };
+const remove = (url: string) => {
+  url = url.replace("/api", "")
+  console.log(url)
+  return http.delete<string>(url);
+};
 // const removeAll = () => {
 //   return http.delete<any>(`/locations`);
 // };
@@ -26,7 +28,7 @@ const GameService = {
   // get,
   // create,
   // update,
-  // remove,
+  remove,
   // removeAll,
   // findByTitle,
 };

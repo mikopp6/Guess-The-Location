@@ -30,7 +30,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const ScoreTable: React.FC = () => {
+const ModifiableScoreTable: React.FC = () => {
   useEffect(() => {
       retrievelocations();
   }, []);
@@ -38,14 +38,27 @@ const ScoreTable: React.FC = () => {
   const [listItems, setListItems] = useState(10)
   const retrievelocations = () => {
       GameService.getAll()
-          .then((response: any) => {
+        .then((response: any) => {
           setGames(response.data.items);
-          })
-          .catch((e: Error) => {
+        })
+        .catch((e: Error) => {
           console.log(e);
-          });
+        });
   };
+
+  const handleDelete = (row: any) => {
+    console.log(row["@controls"].self.href);
+    GameService.remove(row["@controls"].self.href)
+      .then((response: any) => {
+        retrievelocations();
+      })
+      .catch((e: Error) => {
+        console.log(e);
+      });
+  }
+
   const classes = useStyles();
+
   let nextButton;
   let noButton;
   if (games.length > listItems) {
@@ -55,30 +68,37 @@ const ScoreTable: React.FC = () => {
   } else {
       nextButton = <Button className={classes.nextButton} variant="text" onClick={() => setListItems(listItems - 10)}><NavigateBeforeIcon/>Back</Button>
   }
+
   return (
-      <>
-    <TableContainer>
-      <Table className={classes.table} size="medium" aria-label="a dense table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Name</TableCell>
-            <TableCell align="right">Score</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {games.slice(listItems - 10, listItems).map((row) => (
-            <TableRow key={row.player_name + Math.random()}>
-              <TableCell component="th" scope="row">
-                {row.player_name}
-              </TableCell>
-              <TableCell align="right">{row.score}</TableCell>
+    <>
+      <TableContainer>
+        <Table className={classes.table} size="medium" aria-label="a dense table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Name</TableCell>
+              <TableCell align="center">Score</TableCell>
+              <TableCell align="right"></TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-    {nextButton ? nextButton : noButton}
+          </TableHead>
+          <TableBody>
+            {games.slice(listItems - 10, listItems).map((row) => (
+              <TableRow key={row.player_name + Math.random()}>
+                <TableCell component="th" scope="row">
+                  {row.player_name}
+                </TableCell>
+                <TableCell align="center">
+                  {row.score}
+                </TableCell>
+                <TableCell align="right">
+                  <Button variant="text" onClick={() => handleDelete(row)}>DELETE</Button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      {nextButton ? nextButton : noButton}
     </>
   );
 }
-export default ScoreTable;
+export default ModifiableScoreTable;

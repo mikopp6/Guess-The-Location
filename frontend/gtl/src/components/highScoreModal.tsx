@@ -5,6 +5,7 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import ScoreTable from './highScoreTable'
+import ModifiableScoreTable from './modifiableHighScoreTable';
 const useStyles = makeStyles(theme => ({
     modal: {
         display: 'flex',
@@ -18,9 +19,10 @@ const useStyles = makeStyles(theme => ({
         padding: theme.spacing(2, 3, 1),
     },
 }));
-const HighScoreModal: React.FC = () => {
+const HighScoreModal: React.FC<{modifiable: Boolean}>= ({modifiable}) => {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
+
     const handleOpen = () => {
         setOpen(true);
     };
@@ -28,27 +30,36 @@ const HighScoreModal: React.FC = () => {
         setOpen(false);
     };
     return (
-        <>
-            <Button variant="outlined" size="large" onClick={handleOpen}>
+        <>  
+          {modifiable 
+            ? <Button variant="outlined" size="large" onClick={handleOpen}>
+                Modify Scores
+              </Button>
+            : <Button variant="outlined" size="large" onClick={handleOpen}>
                 High Scores
-            </Button>
-            <Modal
-                aria-labelledby="transition-modal-title"
-                aria-describedby="transition-modal-description"
-                className={classes.modal}
-                open={open}
-                onClose={handleClose}
-                closeAfterTransition
-                BackdropComponent={Backdrop}
-                BackdropProps={{
-                    timeout: 500,
-                }}>
-                <Fade in={open}>
-                    <div className={classes.paper}>
-                        <ScoreTable />
-                    </div>
-                </Fade>
-            </Modal>
+              </Button>
+          }
+          <Modal
+            aria-labelledby="transition-modal-title"
+            aria-describedby="transition-modal-description"
+            className={classes.modal}
+            open={open}
+            onClose={handleClose}
+            closeAfterTransition
+            BackdropComponent={Backdrop}
+            BackdropProps={{
+                timeout: 500,
+            }}
+          >
+            <Fade in={open}>
+                <div className={classes.paper}>
+                  {modifiable 
+                    ? <ModifiableScoreTable />
+                    : <ScoreTable />
+                  }
+                </div>
+            </Fade>
+          </Modal>
         </>
     );
 }
