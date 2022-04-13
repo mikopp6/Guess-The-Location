@@ -11,6 +11,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import IGame from '../types/Game';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
+import { TextField } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
     table: {
@@ -83,11 +84,27 @@ const ModifiableScoreTable: React.FC = () => {
           <TableBody>
             {games.slice(listItems - 10, listItems).map((row) => (
               <TableRow key={row.player_name + Math.random()}>
-                <TableCell component="th" scope="row">
-                  {row.player_name}
+                <TableCell component="th" scope="row" width={50} >
+                  <TextField
+                    hiddenLabel
+                    id="player_name"
+                    defaultValue={row.player_name}
+                    variant="filled"
+                    size="small"
+                    onChange={() => console.log("vaihtu")}
+                    inputProps={{ maxLength: 3 }}
+                  />
                 </TableCell>
-                <TableCell align="center">
-                  {row.score}
+                <TableCell align="center" width={50} >
+                  <TextField
+                    hiddenLabel
+                    id="score"
+                    defaultValue={row.score}
+                    variant="filled"
+                    size="small"
+                    onChange={() => console.log("vaihtu")}
+                    inputProps={{ maxLength: 5 }}
+                  />
                 </TableCell>
                 <TableCell align="right">
                   <Button variant="text" onClick={() => handleDelete(row)}>DELETE</Button>
