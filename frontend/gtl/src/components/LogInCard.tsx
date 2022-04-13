@@ -5,15 +5,28 @@ import Box from '@material-ui/core/Box';
 
 import IPerson from '../types/Person';
 import PersonService from '../services/PersonService';
+import { useNavigate } from 'react-router-dom';
+
+/**
+ * LogInCard
+ *
+ * The window inside LogInModal that allows logging in.
+ * The actual "login" is just checking if the email and pw
+ * match someone that was retrieved from the api.
+ * 
+ */
+
 
 const LogInCard: React.FC = () => {
   const [persons, setPersons] = useState<Array<IPerson>>([])
   const [fetchIsDone, setFetchIsDone] = useState(false)
 
+  const navigate = useNavigate()
+
   useEffect(() => {
     retrievePersons()
   }, [])
-
+  
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -23,7 +36,9 @@ const LogInCard: React.FC = () => {
     for(const key in persons){
       const person = persons[key]
       if (person.email === email && person.password === password){
-        console.log("Success!")
+        if (fetchIsDone){
+          navigate('/admin')
+        }
       }
     }
   };
