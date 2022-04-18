@@ -1,8 +1,8 @@
-import http from "../http-common";
-import IPerson from "../types/Person";
+import http from "../http-common"
+import IPerson from "../types/Person"
 const getAll = () => {
-  return http.get<Array<IPerson>>("/persons/");
-};
+    return http.get<Array<IPerson>>("/persons/")
+}
 // const get = (id: any) => {
 //   return http.get<ILocation>(`/locations/${id}`);
 // };
@@ -22,12 +22,12 @@ const getAll = () => {
 //   return http.get<Array<ILocation>>(`/locations?title=${title}`);
 // };
 const PersonService = {
-  getAll,
-  // get,
-  // create,
-  // update,
-  // remove,
-  // removeAll,
-  // findByTitle,
-};
-export default PersonService;
+    getAll,
+    // get,
+    // create,
+    // update,
+    // remove,
+    // removeAll,
+    // findByTitle,
+}
+export default PersonService

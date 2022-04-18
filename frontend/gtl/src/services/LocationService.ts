@@ -1,8 +1,8 @@
-import http from "../http-common";
-import ILocation from "../types/Location";
+import http from "../http-common"
+import ILocation from "../types/Location"
 const getAll = () => {
-  return http.get<Array<ILocation>>("/locations/");
-};
+    return http.get<Array<ILocation>>("/locations/")
+}
 // const get = (id: any) => {
 //   return http.get<ILocation>(`/locations/${id}`);
 // };
@@ -22,12 +22,12 @@ const getAll = () => {
 //   return http.get<Array<ILocation>>(`/locations?title=${title}`);
 // };
 const LocationService = {
-  getAll,
-  // get,
-  // create,
-  // update,
-  // remove,
-  // removeAll,
-  // findByTitle,
-};
-export default LocationService;
+    getAll,
+    // get,
+    // create,
+    // update,
+    // remove,
+    // removeAll,
+    // findByTitle,
+}
+export default LocationService
