@@ -93,8 +93,11 @@ const ModifiableLocationTable: React.FC = () => {
                     <TableHead>
                         <TableRow>
                             <TableCell>Path</TableCell>
+                            <TableCell align="center" >IMG</TableCell>
                             <TableCell>Country</TableCell>
                             <TableCell>Town</TableCell>
+                            <TableCell></TableCell>
+                            <TableCell></TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -109,6 +112,9 @@ const ModifiableLocationTable: React.FC = () => {
                                         size="small"
                                         onChange={(event) => row.image_path = event.target.value}
                                     />
+                                </TableCell>
+                                <TableCell align="center" width={10}>
+                                    <Button variant="text" onClick={()=> window.open(("http://localhost:8080/static/images/" + row.image_path))}>view</Button>
                                 </TableCell>
                                 <TableCell align="center" width={150} >
                                     <TextField
