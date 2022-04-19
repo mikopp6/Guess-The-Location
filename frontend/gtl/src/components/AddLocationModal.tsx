@@ -1,8 +1,10 @@
 import React from "react"
-import { makeStyles } from "@material-ui/core/styles"
+import makeStyles from "@material-ui/core/styles/makeStyles"
 import Modal from "@material-ui/core/Modal"
 import Backdrop from "@material-ui/core/Backdrop"
 import Fade from "@material-ui/core/Fade"
+import Button from "@material-ui/core/Button"
+
 import AddLocationCard from "./AddLocationCard"
 
 const useStyles = makeStyles(theme => ({
@@ -19,14 +21,21 @@ const useStyles = makeStyles(theme => ({
     },
 }))
 
-const AddLocation: React.FC = () => {
+const LogInModal: React.FC = () => {
     const classes = useStyles()
-    const [open, setOpen] = React.useState(true)
+    const [open, setOpen] = React.useState(false)
+
+    const handleOpen = () => {
+        setOpen(true)
+    }
     const handleClose = () => {
         setOpen(false)
     }
     return (
         <>
+            <Button variant="outlined" size="large" onClick={handleOpen}>
+                Add Location
+            </Button>
             <Modal
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
@@ -47,4 +56,4 @@ const AddLocation: React.FC = () => {
         </>
     )
 }
-export default AddLocation
+export default LogInModal

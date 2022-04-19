@@ -1,25 +1,22 @@
 import React, { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
 import Button from "@material-ui/core/Button"
 import TextField from "@material-ui/core/TextField"
 import Box from "@material-ui/core/Box"
-import { AxiosResponse } from "axios"
 
 import IPerson from "../types/Person"
 import PersonService from "../services/PersonService"
-
+import { useNavigate } from "react-router-dom"
+import { AxiosResponse } from "axios"
 
 /**
- * LogInCard
+ * AddLocationCard
  *
- * The window inside LogInModal that allows logging in.
- * The actual "login" is just checking if the email and pw
- * match someone that was retrieved from the api.
+ * 
  * 
  */
 
 
-const LogInCard: React.FC = () => {
+const AddLocationCard: React.FC = () => {
     const [persons, setPersons] = useState<Array<IPerson>>([])
     const [fetchIsDone, setFetchIsDone] = useState(false)
 
@@ -57,30 +54,31 @@ const LogInCard: React.FC = () => {
     }
     return (
         <Box component="form" onSubmit={handleSubmit} >
-            <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                autoFocus
+            <TextField 
+                type="file"
+                name="image"
             />
             <TextField
                 margin="normal"
                 required
                 fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
+                name="Country"
+                label="Country"
+                type="Country"
+                id="Country"
+            />
+            <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="Town"
+                label="Town"
+                name="Town"
             />
             <Button type="submit" variant="outlined" >
-                Log In
+                Submit
             </Button>
         </Box>
     )
 }
-export default LogInCard
+export default AddLocationCard

@@ -6,13 +6,17 @@ import TableCell from "@material-ui/core/TableCell"
 import TableContainer from "@material-ui/core/TableContainer"
 import TableHead from "@material-ui/core/TableHead"
 import TableRow from "@material-ui/core/TableRow"
-import GameService from "../services/GameService"
 import { makeStyles } from "@material-ui/core/styles"
-import IGame from "../types/Game"
 import NavigateNextIcon from "@material-ui/icons/NavigateNext"
 import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore"
+import { AxiosResponse } from "axios"
 
-const useStyles = makeStyles(theme => ({
+import IGame from "../types/Game"
+import GameService from "../services/GameService"
+
+
+
+const useStyles = makeStyles(() => ({
     table: {
         textTransform: "uppercase",
         minWidth: 300,
@@ -38,7 +42,7 @@ const ScoreTable: React.FC = () => {
     const [listItems, setListItems] = useState(10)
     const retrieveGames = () => {
         GameService.getAll()
-            .then((response: any) => {
+            .then((response: AxiosResponse) => {
                 setGames(response.data.items)
             })
             .catch((e: Error) => {
