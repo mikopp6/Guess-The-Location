@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom"
 
 import theme from "../theme"
 import HighScoreModal from "../components/highScoreModal"
+import LocationModal from "../components/locationModal"
 
 
 // export interface IAdminPageProps {}
@@ -16,14 +17,12 @@ const AdminPage: React.FC = () => {
             <Container className="App">
                 <Grid>
                     <Button variant="outlined" size="large">
-            Add Location
+                        Add Location
                     </Button>
-                    <Button variant="outlined" size="large">
-            Modify Locations
-                    </Button>
+                    <LocationModal modifiable={true}/>
                     <HighScoreModal modifiable={true}/>
                     <Button onClick={() => navigate("/")} variant="outlined" size="large">
-            Log out
+                        Log out
                     </Button>
                 </Grid>
             </Container>

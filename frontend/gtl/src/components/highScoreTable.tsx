@@ -32,11 +32,11 @@ const useStyles = makeStyles(theme => ({
 
 const ScoreTable: React.FC = () => {
     useEffect(() => {
-        retrievelocations()
+        retrieveGames()
     }, [])
     const [games, setGames] = useState<Array<IGame>>([])
     const [listItems, setListItems] = useState(10)
-    const retrievelocations = () => {
+    const retrieveGames = () => {
         GameService.getAll()
             .then((response: any) => {
                 setGames(response.data.items)

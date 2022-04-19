@@ -9,12 +9,19 @@ const getAll = () => {
 // const create = (data: ILocation) => {
 //   return http.post<ILocation>("/locations", data);
 // };
-// const update = (id: any, data: ILocation) => {
-//   return http.put<any>(`/locations/${id}`, data);
-// };
+const update = (url: string, player_name: string, score: number, timestamp: string, game_type: number) => {
+    url = url.replace("/api", "")
+    const data = {
+        "player_name": player_name,
+        "score": score,
+        "timestamp": timestamp,
+        "game_type": game_type
+    }
+    return http.put<string>(url, data)
+}
+
 const remove = (url: string) => {
     url = url.replace("/api", "")
-    console.log(url)
     return http.delete<string>(url)
 }
 // const removeAll = () => {
@@ -27,7 +34,7 @@ const GameService = {
     getAll,
     // get,
     // create,
-    // update,
+    update,
     remove,
     // removeAll,
     // findByTitle,

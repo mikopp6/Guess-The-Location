@@ -9,12 +9,21 @@ const getAll = () => {
 // const create = (data: ILocation) => {
 //   return http.post<ILocation>("/locations", data);
 // };
-// const update = (id: any, data: ILocation) => {
-//   return http.put<any>(`/locations/${id}`, data);
-// };
-// const remove = (id: any) => {
-//   return http.delete<any>(`/locations/${id}`);
-// };
+const update = (url: string, image_path: string, country_name: string, town_name: string, person_id: number) => {
+    url = url.replace("/api", "")
+    const data = {
+        "image_path": image_path,
+        "country_name": country_name,
+        "town_name": town_name,
+        "person_id": person_id,
+    }
+    return http.put<string>(url, data)
+}
+
+const remove = (url: string) => {
+    url = url.replace("/api", "")
+    return http.delete<string>(url)
+}
 // const removeAll = () => {
 //   return http.delete<any>(`/locations`);
 // };
@@ -25,8 +34,8 @@ const LocationService = {
     getAll,
     // get,
     // create,
-    // update,
-    // remove,
+    update,
+    remove,
     // removeAll,
     // findByTitle,
 }

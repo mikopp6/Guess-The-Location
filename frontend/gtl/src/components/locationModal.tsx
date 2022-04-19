@@ -6,7 +6,7 @@ import Backdrop from "@material-ui/core/Backdrop"
 import Fade from "@material-ui/core/Fade"
 
 import ScoreTable from "./highScoreTable"
-import ModifiableScoreTable from "./ModifiableHighScoreTable"
+import ModifiableLocationTable from "./ModifiableLocationTable"
 
 const useStyles = makeStyles(theme => ({
     modal: {
@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
         padding: theme.spacing(2, 3, 1),
     },
 }))
-const HighScoreModal: React.FC<{modifiable: boolean}>= ({modifiable}) => {
+const LocationModal: React.FC<{modifiable: boolean}>= ({modifiable}) => {
     const classes = useStyles()
     const [open, setOpen] = React.useState(false)
 
@@ -33,12 +33,9 @@ const HighScoreModal: React.FC<{modifiable: boolean}>= ({modifiable}) => {
     }
     return (
         <>  
-            {modifiable 
-                ? <Button variant="outlined" size="large" onClick={handleOpen}>
-                Modify Scores
-                </Button>
-                : <Button variant="outlined" size="large" onClick={handleOpen}>
-                High Scores
+            {modifiable && 
+                <Button variant="outlined" size="large" onClick={handleOpen}>
+                    Modify Locations
                 </Button>
             }
             <Modal
@@ -56,7 +53,7 @@ const HighScoreModal: React.FC<{modifiable: boolean}>= ({modifiable}) => {
                 <Fade in={open}>
                     <div className={classes.paper}>
                         {modifiable 
-                            ? <ModifiableScoreTable />
+                            ? <ModifiableLocationTable />
                             : <ScoreTable />
                         }
                     </div>
@@ -65,4 +62,4 @@ const HighScoreModal: React.FC<{modifiable: boolean}>= ({modifiable}) => {
         </>
     )
 }
-export default HighScoreModal
+export default LocationModal
