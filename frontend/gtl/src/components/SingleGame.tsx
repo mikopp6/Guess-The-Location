@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import ILocation from "../types/Location"
-import { makeStyles } from "@material-ui/core/styles"
+import makeStyles from "@mui/styles/makeStyles"
 
 const useStyles = makeStyles(theme => ({
     image: {

@@ -1,9 +1,9 @@
 import React from "react"
-import makeStyles from "@material-ui/core/styles/makeStyles"
-import Modal from "@material-ui/core/Modal"
-import Backdrop from "@material-ui/core/Backdrop"
-import Fade from "@material-ui/core/Fade"
-import Button from "@material-ui/core/Button"
+import makeStyles from "@mui/styles/makeStyles"
+import Modal from "@mui/material/Modal"
+import Backdrop from "@mui/material/Backdrop"
+import Fade from "@mui/material/Fade"
+import Button from "@mui/material/Button"
 
 import AddLocationCard from "./AddLocationCard"
 

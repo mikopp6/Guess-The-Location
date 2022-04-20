@@ -1,10 +1,17 @@
 import React, { useState } from "react"
-import {Button, Grid, Container} from "@material-ui/core" //importing material ui component
-import { ThemeProvider } from "@material-ui/core/styles"
+import {Button, Grid, Container} from "@mui/material" //importing material ui component
+import { ThemeProvider, Theme, StyledEngineProvider } from "@mui/material/styles"
 import HighScoreModal from "../components/highScoreModal"
 import LogInModal from "../components/LogInModal"
 import theme from "../theme"
 import { useNavigate } from "react-router-dom"
+
+
+declare module "@mui/styles/defaultTheme" {
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  interface DefaultTheme extends Theme {}
+}
+
 
 // export interface IHomePageProps {}
 
@@ -21,19 +28,17 @@ const HomePage: React.FC = () => {
     document.addEventListener("keydown", logKey)
     const navigate = useNavigate()
     return (
-        <ThemeProvider theme={theme}>
-            <Container className="App">
-                <Grid>
-                    <Button onClick={() => navigate("/game")} variant="outlined" size="large">
-            New game
-                    </Button>
-                    {showLoginModal &&
-            <LogInModal />
-                    }
-                    <HighScoreModal modifiable={false}/>
-                </Grid>
-            </Container>
-        </ThemeProvider>
+        <Container className="App">
+            <Grid>
+                <Button onClick={() => navigate("/game")} variant="outlined" size="large">
+        New game
+                </Button>
+                {showLoginModal &&
+        <LogInModal />
+                }
+                <HighScoreModal modifiable={false}/>
+            </Grid>
+        </Container>
     )
 }
 

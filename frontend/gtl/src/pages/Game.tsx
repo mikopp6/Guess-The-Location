@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
-import { ThemeProvider } from "@material-ui/core/styles"
-import { Container } from "@material-ui/core"
+import { ThemeProvider, Theme, StyledEngineProvider } from "@mui/material/styles"
+import { Container } from "@mui/material"
 import { AxiosResponse } from "axios"
 
 import theme from "../theme"
@@ -8,6 +8,14 @@ import SingleGame from "../components/SingleGame"
 import FormDialog from "../components/FormDialog"
 import LocationService from "../services/LocationService"
 import ILocation from "../types/Location"
+
+
+
+declare module "@mui/styles/defaultTheme" {
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  interface DefaultTheme extends Theme {}
+}
+
 
 
 // export interface IGamePageProps {}
@@ -39,20 +47,20 @@ const GamePage: React.FC = () => {
     }
     if (count < 5) {
         return (
-            <ThemeProvider theme={theme}>
-                <Container className="Home">
-                    {fetchIsDone && <SingleGame locations={allLocations} answer={answer} count={count}/>}
-                    <FormDialog count={count} setAnswer={setAnswer} setCount={setCount}/>
-                </Container>
-            </ThemeProvider>
+            <Container className="Home">
+                {fetchIsDone && <SingleGame locations={allLocations} answer={answer} count={count}/>}
+                <FormDialog count={count} setAnswer={setAnswer} setCount={setCount}/>
+            </Container>
         )
     } else {
         return (
-            <ThemeProvider theme={theme}>
-                <Container className="Home">
-                    <p>Peli loppu :)</p>
-                </Container>
-            </ThemeProvider>
+            <StyledEngineProvider injectFirst>
+                <ThemeProvider theme={theme}>
+                    <Container className="Home">
+                        <p>Peli loppu :)</p>
+                    </Container>
+                </ThemeProvider>
+            </StyledEngineProvider>
         )
     }
 }
