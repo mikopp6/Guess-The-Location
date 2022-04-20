@@ -52,8 +52,11 @@ const ScoreTable: React.FC = () => {
     const classes = useStyles()
     let nextButton
     let noButton
+    console.log(games.length, listItems)
     if (games.length > listItems) {
         nextButton = <Button className={classes.nextButton} variant="text" onClick={() => setListItems(listItems + 10)}>Next<NavigateNextIcon/></Button>
+    } else if (games.length < 10) {
+        noButton = ""
     } else if (games.length === 0) {
         noButton = <p className={classes.noButton}>There are no highscores.</p>
     } else {
