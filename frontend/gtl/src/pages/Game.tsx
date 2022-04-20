@@ -4,7 +4,7 @@ import { Container } from "@material-ui/core"
 import { AxiosResponse } from "axios"
 
 import theme from "../theme"
-import LocationList from "../components/LocationList"
+import SingleGame from "../components/SingleGame"
 import FormDialog from "../components/FormDialog"
 import LocationService from "../services/LocationService"
 import ILocation from "../types/Location"
@@ -12,8 +12,10 @@ import ILocation from "../types/Location"
 
 // export interface IGamePageProps {}
 const GamePage: React.FC = () => {
-    const [location, setlocation] = useState<Array<ILocation>>([])
+    const [allLocations, setlocations] = useState<Array<ILocation>>([])
     const [fetchIsDone, setFetchIsDone] = useState(false)
+    const [count, setCount] = useState(0)
+    const [answer, setAnswer] = useState()
   
     useEffect(() => {
         retrievelocations()
@@ -21,22 +23,38 @@ const GamePage: React.FC = () => {
     const retrievelocations = () => {
         LocationService.getAll()
             .then((response: AxiosResponse) => {
-                setlocation(response.data.items)
+                randomlocations(response.data.items)
                 setFetchIsDone(true)
             })
             .catch((e: Error) => {
                 console.log(e)
             })
     }
-    console.log(location)
-    return (
-        <ThemeProvider theme={theme}>
-            <Container className="Home">
-                {fetchIsDone && <LocationList locations={location}/>}
-                <FormDialog/>
-            </Container>
-        </ThemeProvider>
-    )
+    const randomlocations = (data: any) => {
+        const newArray: any = []
+        for (let i = 0; i < 5; i++) {
+            newArray.push(data[i])
+        }
+        setlocations(newArray)
+    }
+    if (count < 5) {
+        return (
+            <ThemeProvider theme={theme}>
+                <Container className="Home">
+                    {fetchIsDone && <SingleGame locations={allLocations} answer={answer} count={count}/>}
+                    <FormDialog count={count} setAnswer={setAnswer} setCount={setCount}/>
+                </Container>
+            </ThemeProvider>
+        )
+    } else {
+        return (
+            <ThemeProvider theme={theme}>
+                <Container className="Home">
+                    <p>Peli loppu :)</p>
+                </Container>
+            </ThemeProvider>
+        )
+    }
 }
 
 export default GamePage

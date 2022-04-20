@@ -6,7 +6,7 @@ import Backdrop from "@material-ui/core/Backdrop"
 import Fade from "@material-ui/core/Fade"
 
 import ScoreTable from "./highScoreTable"
-import ModifiableScoreTable from "./ModifiableHighScoreTable"
+import ModifiableScoreTable from "./modifiableHighScoreTable"
 
 const useStyles = makeStyles(theme => ({
     modal: {
