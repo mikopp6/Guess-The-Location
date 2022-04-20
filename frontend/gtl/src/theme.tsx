@@ -1,10 +1,10 @@
-import { createTheme, adaptV4Theme } from "@mui/material/styles"
+import { createTheme, } from "@mui/material/styles"
 
 
-export const theme = createTheme(adaptV4Theme({
+export const theme = createTheme({
     palette: {
         primary: {
-            main: "#f00"
+            main: "#000"
         }
     },
     typography: {
@@ -14,44 +14,57 @@ export const theme = createTheme(adaptV4Theme({
         "fontWeightRegular": 400,
         "fontWeightMedium": 500
     },
-    overrides: {
+    components: {
         MuiButton: {
-            outlinedSizeLarge: {
-                fontSize: 28,
-                fontWeight: 500,
-                lineHeight: "unset",
-                maxWidth: 200,
-                maxHeight: 100,
-                marginRight: 20,
-                marginLeft: 20,
-                borderRadius: 10,
-                borderWidth: 8,
-                borderColor: "#000"
-            }
+            styleOverrides: {
+                outlinedSizeLarge: {
+                    fontSize: 28,
+                    fontWeight: 500,
+                    lineHeight: "unset",
+                    maxWidth: 200,
+                    maxHeight: 100,
+                    marginRight: 20,
+                    marginLeft: 20,
+                    borderRadius: 10,
+                    borderWidth: 8,
+                    borderColor: "#000",
+                    "&:hover": {
+                        borderRadius: 10,
+                        borderWidth: 8,
+                        borderColor: "#000"
+                    },
+                }
+            },
         },
         MuiContainer: {
-            root: {
-                width: "100%",
-                display: "flex"
-            },
+            styleOverrides: {
+                root: {
+                    width: "100%",
+                    display: "flex",
+                },
+            }
         },
         MuiDialog: {
-            paper: {
-                backgroundColor: "#d7d7d7ba",
-            },
-            paperWidthSm: {
-                maxWidth: 438,
-            },
-            container: {
-                height: "unset",
-            },
+            styleOverrides: {
+                paper: {
+                    backgroundColor: "#d7d7d7ba",
+                },
+                paperWidthSm: {
+                    maxWidth: 438,
+                },
+                container: {
+                    height: "unset",
+                },
+            }
         },
         MuiBackdrop: {
-            root: {
-                backgroundColor: "unset"
+            styleOverrides: {
+                root: {
+                    backgroundColor: "unset"
+                }
             }
         },
     }
-}))
+})
 
 export default theme
