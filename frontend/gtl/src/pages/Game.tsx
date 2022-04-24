@@ -16,14 +16,13 @@ declare module "@mui/styles/defaultTheme" {
   interface DefaultTheme extends Theme {}
 }
 
-
-
 // export interface IGamePageProps {}
 const GamePage: React.FC = () => {
     const [allLocations, setlocations] = useState<Array<ILocation>>([])
     const [fetchIsDone, setFetchIsDone] = useState(false)
     const [count, setCount] = useState(0)
-    const [answer, setAnswer] = useState()
+    // const [answer, setAnswer] = useState()
+    const [correct, setCorrect] = useState(0)
   
     useEffect(() => {
         retrievelocations()
@@ -48,19 +47,26 @@ const GamePage: React.FC = () => {
     if (count < 5) {
         return (
             <Container className="Home">
-                {fetchIsDone && <SingleGame locations={allLocations} answer={answer} count={count}/>}
-                <FormDialog count={count} setAnswer={setAnswer} setCount={setCount}/>
+                {fetchIsDone && <SingleGame 
+                    locations={allLocations} 
+                    // answer={answer} 
+                    count={count} 
+                    correct={correct}
+                    setCorrect={setCorrect}
+                    // setAnswer={setAnswer} 
+                    setCount={setCount}/>}
+                {/* <FormDialog count={count} setAnswer={setAnswer} setCount={setCount}/> */}
             </Container>
         )
     } else {
         return (
-            <StyledEngineProvider injectFirst>
+            <Container className="App">
                 <ThemeProvider theme={theme}>
                     <Container className="Home">
-                        <p>Peli loppu :)</p>
+                        <p>Peli loppu, sait {correct} oikein :)</p>
                     </Container>
                 </ThemeProvider>
-            </StyledEngineProvider>
+            </Container>
         )
     }
 }

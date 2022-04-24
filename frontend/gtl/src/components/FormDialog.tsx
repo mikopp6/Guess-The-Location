@@ -6,23 +6,42 @@ import Box from "@mui/material/Box"
 import DialogActions from "@mui/material/DialogActions"
 import DialogContent from "@mui/material/DialogContent"
 import DialogTitle from "@mui/material/DialogTitle"
+import ILocation from "../types/Location"
 
 interface Props {
     setAnswer: any
+    correct: number
     setCount: any
+    setCorrect: any
     count: number
+    locations: Array<ILocation>
 }
-const FormDialog: React.FC<Props> = ({setAnswer, setCount, count}) => {
-    const [errors, setErrors] = React.useState<{ answer: string }>()
-    // const [answer, setAnswer] = React.useState<string>()
-    let answer: any
+const FormDialog: React.FC<Props> = ({setAnswer, setCount, count, locations, correct, setCorrect}) => {
+    const [errors, setErrors] = React.useState(false)
+    const [inputValue, setInputValue] = React.useState("")
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         const data = new FormData(event.currentTarget)
-        answer = data.get("answer")
+        const answer: any = data.get("answer")
         setAnswer(answer)
+        setInputValue("")
+        if (answer === "") {
+            setErrors(true)
+        } else {
+            if (answer.toUpperCase() === locations?.[count]?.country_name.toUpperCase() || answer.toUpperCase() === locations?.[count]?.town_name.toUpperCase()) {
+                setCorrect(correct + 1)
+            }
+            setErrors(false)
+            setCount(count + 1)
+        }
     }
-
+    const handleUserInput = (e: any) => {
+        setInputValue(e.target.value)
+    }
+    const handleGiveUp = () => {
+        setCount(count + 1)
+        setErrors(false)
+    }
     return (
         <Dialog fullWidth open={true}>
             <DialogTitle>Where is this from?</DialogTitle>
@@ -33,19 +52,20 @@ const FormDialog: React.FC<Props> = ({setAnswer, setCount, count}) => {
                         label="City, country, or both"
                         type="text"
                         name="answer"
-                        value={answer}
+                        value={inputValue}
+                        onChange={handleUserInput}
                         variant="standard"
                         fullWidth
                         inputProps={{ maxLength: 255 }}
-                        error={Boolean(errors?.answer)}
-                        helperText={(errors?.answer)}
+                        error={errors}
+                        helperText={errors ? "Empty field!" : " "}
                         // errorText= {this.state.errorText}
                     />
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={() => setCount(count + 1)} type="submit">Submit</Button>
+                    <Button type="submit">Submit</Button>
                     <div style={{flex: "1 0 0"}} />
-                    <Button >Give up</Button>
+                    <Button onClick={handleGiveUp}>Give up</Button>
                 </DialogActions>
             </Box>
         </Dialog>
