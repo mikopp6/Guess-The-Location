@@ -5,7 +5,7 @@ import { AxiosResponse } from "axios"
 
 import theme from "../theme"
 import SingleGame from "../components/SingleGame"
-import FormDialog from "../components/FormDialog"
+import SaveGameModal from "../components/SaveGameModal"
 import LocationService from "../services/LocationService"
 import ILocation from "../types/Location"
 
@@ -63,7 +63,7 @@ const GamePage: React.FC = () => {
             <Container className="App">
                 <ThemeProvider theme={theme}>
                     <Container className="Home">
-                        <p>Peli loppu, sait {correct} oikein :)</p>
+                        <SaveGameModal/>
                     </Container>
                 </ThemeProvider>
             </Container>

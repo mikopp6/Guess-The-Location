@@ -50,12 +50,12 @@ export const theme = createTheme({
                     backgroundColor: "#d7d7d7ba",
                 },
                 paperWidthSm: {
-                    maxWidth: 438,
+                    maxWidth: 420,
                 },
                 container: {
                     height: "unset",
                 },
-            }
+            },
         },
         MuiBackdrop: {
             styleOverrides: {
