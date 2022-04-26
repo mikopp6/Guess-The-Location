@@ -57,7 +57,8 @@ const LogInCard: React.FC = () => {
                 setFetchIsDone(true)
             })
             .catch((e: Error) => {
-                console.log(e)
+                setErrorMessage(e.message)
+                setErrorOpen(true)
             })
     }
     return (
