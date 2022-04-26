@@ -18,7 +18,7 @@ const AddLocationCard: React.FC = () => {
     }
 
     return (
-        <Box sx={{ width: 300, height: 225 }}>
+        <Box sx={{ width: 300, height: 260 }}>
             <TextField 
                 type="file"
                 name="image"

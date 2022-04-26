@@ -31,6 +31,18 @@
 
    `flask run`
 
+## Frontend client install instructions
+
+1. Install necessary dependencies
+
+   `npm install --legacy-peer-deps`
+
+2. Make sure API is running, check instructions above
+
+3. Run client
+
+   `npm start`
+
 ## Additional stuff
 
 ### Documentation
