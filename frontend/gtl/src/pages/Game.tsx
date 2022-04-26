@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { ThemeProvider, Theme, StyledEngineProvider } from "@mui/material/styles"
+import { ThemeProvider, Theme } from "@mui/material/styles"
 import { Container } from "@mui/material"
 import { AxiosResponse } from "axios"
 
@@ -39,13 +39,14 @@ const GamePage: React.FC = () => {
     const randomlocations = (data: Array<ILocation>) => {
         const newArray: Array<ILocation> = []
         const usedLocations: any = []
-        for (let i = usedLocations.length; i < 5; i++) {
-            const int = Math.floor(Math.random() * (data.length + 1))
+        while (usedLocations.length < 5) {
+            const int = Math.floor(Math.random() * (data.length))
             if (!usedLocations.includes(int)) {
                 usedLocations.push(int)
                 newArray.push(data[int])
             }
         }
+        console.log(newArray)
         setlocations(newArray)
     }
     if (count < 5) {
