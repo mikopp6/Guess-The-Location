@@ -40,7 +40,7 @@ const GamePage: React.FC = () => {
         const newArray: Array<ILocation> = []
         const usedLocations: any = []
         for (let i = usedLocations.length; i < 5; i++) {
-            const int = Math.floor(Math.random() * (7 + 1))
+            const int = Math.floor(Math.random() * (data.length + 1))
             if (!usedLocations.includes(int)) {
                 usedLocations.push(int)
                 newArray.push(data[int])
