@@ -7,23 +7,22 @@ import DialogActions from "@mui/material/DialogActions"
 import DialogContent from "@mui/material/DialogContent"
 import DialogTitle from "@mui/material/DialogTitle"
 import ILocation from "../types/Location"
+import { Dispatch, SetStateAction } from "react"
 
 interface Props {
-    setAnswer: any
     correct: number
-    setCount: any
-    setCorrect: any
+    setCount: Dispatch<SetStateAction<number>>
+    setCorrect: Dispatch<SetStateAction<number>>
     count: number
     locations: Array<ILocation>
 }
-const FormDialog: React.FC<Props> = ({setAnswer, setCount, count, locations, correct, setCorrect}) => {
+const FormDialog: React.FC<Props> = ({setCount, count, locations, correct, setCorrect}) => {
     const [errors, setErrors] = React.useState(false)
     const [inputValue, setInputValue] = React.useState("")
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         const data = new FormData(event.currentTarget)
-        const answer: any = data.get("answer")
-        setAnswer(answer)
+        const answer: string = data.get("answer") as string
         setInputValue("")
         if (answer === "") {
             setErrors(true)
@@ -35,7 +34,7 @@ const FormDialog: React.FC<Props> = ({setAnswer, setCount, count, locations, cor
             setCount(count + 1)
         }
     }
-    const handleUserInput = (e: any) => {
+    const handleUserInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(e.target.value)
     }
     const handleGiveUp = () => {

@@ -39,6 +39,7 @@ const useStyles = makeStyles(() => ({
 const ScoreTable: React.FC = () => {
     useEffect(() => {
         retrieveGames()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     const [games, setGames] = useState<Array<IGame>>([])
     const [listItems, setListItems] = useState(10)
@@ -58,7 +59,6 @@ const ScoreTable: React.FC = () => {
     const classes = useStyles()
     let nextButton
     let noButton
-    console.log(games.length, listItems)
     if (games.length > listItems) {
         nextButton = <Button className={classes.nextButton} variant="text" onClick={() => setListItems(listItems + 10)}>Next<NavigateNextIcon/></Button>
     } else if (games.length < 10) {

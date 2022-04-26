@@ -39,6 +39,7 @@ const useStyles = makeStyles(() => ({
 const ModifiableScoreTable: React.FC = () => {
     useEffect(() => {
         retrieveGames()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     const [games, setGames] = useState<Array<IGame>>([])
     const [listItems, setListItems] = useState(10)

@@ -39,6 +39,7 @@ const useStyles = makeStyles(() => ({
 const ModifiableLocationTable: React.FC = () => {
     useEffect(() => {
         retrieveLocations()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     const [locations, setLocations] = useState<Array<ILocation>>([])
     const [listItems, setListItems] = useState(10)

@@ -1,9 +1,8 @@
 import React, { useState } from "react"
 import {Button, Grid, Container} from "@mui/material" //importing material ui component
-import { ThemeProvider, Theme, StyledEngineProvider } from "@mui/material/styles"
+import { Theme } from "@mui/material/styles"
 import HighScoreModal from "../components/highScoreModal"
 import LogInModal from "../components/LogInModal"
-import theme from "../theme"
 import { useNavigate } from "react-router-dom"
 
 
@@ -13,15 +12,11 @@ declare module "@mui/styles/defaultTheme" {
 }
 
 
-// export interface IHomePageProps {}
-
-
-
 const HomePage: React.FC = () => {
     const [showLoginModal, setShowLoginModal] = useState(false)
 
-    const logKey = (e: any) => {
-        if (e.keyCode === 76 && e.altKey) {
+    const logKey = (e: KeyboardEvent) => {
+        if (e.key === "L" && e.altKey) {
             setShowLoginModal(true)
         }
     }

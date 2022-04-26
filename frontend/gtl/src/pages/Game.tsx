@@ -24,21 +24,22 @@ const GamePage: React.FC = () => {
     const [correct, setCorrect] = useState(0)
   
     useEffect(() => {
+        const retrievelocations = () => {
+            LocationService.getAll()
+                .then((response: AxiosResponse) => {
+                    randomlocations(response.data.items)
+                    setFetchIsDone(true)
+                })
+                .catch((e: Error) => {
+                    console.log(e)
+                })
+        }
         retrievelocations()
     }, [])
-    const retrievelocations = () => {
-        LocationService.getAll()
-            .then((response: AxiosResponse) => {
-                randomlocations(response.data.items)
-                setFetchIsDone(true)
-            })
-            .catch((e: Error) => {
-                console.log(e)
-            })
-    }
+
     const randomlocations = (data: Array<ILocation>) => {
         const newArray: Array<ILocation> = []
-        const usedLocations: any = []
+        const usedLocations: Array<number> = []
         while (usedLocations.length < 5) {
             const int = Math.floor(Math.random() * (data.length))
             if (!usedLocations.includes(int)) {
@@ -46,7 +47,6 @@ const GamePage: React.FC = () => {
                 newArray.push(data[int])
             }
         }
-        console.log(newArray)
         setlocations(newArray)
     }
     if (count < 5) {

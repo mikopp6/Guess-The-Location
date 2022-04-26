@@ -37,7 +37,6 @@ const LogInCard: React.FC = () => {
         const data = new FormData(event.currentTarget)
         const email = data.get("email")
         const password = data.get("password")
-        console.log("Submitted: ", email, password)
         for(const key in persons){
             const person = persons[key]
             if (person.email === email && person.password === password) {

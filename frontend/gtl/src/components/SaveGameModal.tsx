@@ -13,7 +13,7 @@ import GameService from "../services/GameService"
 import Alert from "@mui/material/Alert"
 import moment from "moment"
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles({
     dialogTitle: {
         textAlign: "center",
         paddingBottom: 0
@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme => ({
             maxWidth: 330,
         }
     },
-}))
+})
 
 interface Props {
     correct: number
@@ -39,14 +39,14 @@ const SaveGameModal: React.FC<Props> = ({correct}) => {
     const [errors, setErrors] = useState(false)
     const [errorOpen, setErrorOpen] = useState(false)
     const [errorMessage, setErrorMessage] = useState("")
-    const maxPoints = 5000
+    const maxPoints = 5000 * 3
     const classes = useStyles()
     const navigate = useNavigate()
-    const userCorrect = correct * 1000
+    const userCorrect = (correct * 1000) * 3
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         const data = new FormData(event.currentTarget)
-        const answer: any = data.get("answer")
+        const answer: string = data.get("answer") as string
         if (answer.length < 3) {
             setErrors(true)
         } else {
