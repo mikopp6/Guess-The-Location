@@ -21,7 +21,6 @@ const GamePage: React.FC = () => {
     const [allLocations, setlocations] = useState<Array<ILocation>>([])
     const [fetchIsDone, setFetchIsDone] = useState(false)
     const [count, setCount] = useState(0)
-    // const [answer, setAnswer] = useState()
     const [correct, setCorrect] = useState(0)
   
     useEffect(() => {
@@ -37,10 +36,15 @@ const GamePage: React.FC = () => {
                 console.log(e)
             })
     }
-    const randomlocations = (data: any) => {
-        const newArray: any = []
-        for (let i = 0; i < 5; i++) {
-            newArray.push(data[i])
+    const randomlocations = (data: Array<ILocation>) => {
+        const newArray: Array<ILocation> = []
+        const usedLocations: any = []
+        for (let i = usedLocations.length; i < 5; i++) {
+            const int = Math.floor(Math.random() * (7 + 1))
+            if (!usedLocations.includes(int)) {
+                usedLocations.push(int)
+                newArray.push(data[int])
+            }
         }
         setlocations(newArray)
     }
