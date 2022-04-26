@@ -3,10 +3,12 @@ import { useNavigate } from "react-router-dom"
 import Button from "@mui/material/Button"
 import TextField from "@mui/material/TextField"
 import Box from "@mui/material/Box"
-import { AxiosResponse } from "axios"
+import Alert from "@mui/material/Alert"
 
+import { AxiosResponse } from "axios"
 import IPerson from "../types/Person"
 import PersonService from "../services/PersonService"
+import { Dialog } from "@mui/material"
 
 
 /**
@@ -22,6 +24,7 @@ import PersonService from "../services/PersonService"
 const LogInCard: React.FC = () => {
     const [persons, setPersons] = useState<Array<IPerson>>([])
     const [fetchIsDone, setFetchIsDone] = useState(false)
+    const [errorOpen, setErrorOpen] = useState(false)
 
     const navigate = useNavigate()
 
@@ -37,10 +40,12 @@ const LogInCard: React.FC = () => {
         console.log("Submitted: ", email, password)
         for(const key in persons){
             const person = persons[key]
-            if (person.email === email && person.password === password){
+            if (person.email === email && person.password === password) {
                 if (fetchIsDone){
                     navigate("/admin")
                 }
+            } else {
+                setErrorOpen(!errorOpen)
             }
         }
     }
@@ -80,6 +85,7 @@ const LogInCard: React.FC = () => {
             <Button type="submit" variant="outlined" >
                 Log In
             </Button>
+            {errorOpen && <Alert severity="error" onClose={() => setErrorOpen(false)}>Wrong username or password!</Alert>}
         </Box>
     )
 }
