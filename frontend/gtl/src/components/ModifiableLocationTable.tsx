@@ -10,7 +10,9 @@ import makeStyles from "@mui/styles/makeStyles"
 import NavigateNextIcon from "@mui/icons-material/NavigateNext"
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore"
 import TextField from "@mui/material/TextField"
+
 import { AxiosResponse } from "axios"
+import Alert from "@mui/material/Alert"
 
 import ILocation from "../types/Location"
 import LocationService from "../services/LocationService"
@@ -40,6 +42,8 @@ const ModifiableLocationTable: React.FC = () => {
     }, [])
     const [locations, setLocations] = useState<Array<ILocation>>([])
     const [listItems, setListItems] = useState(10)
+    const [errorOpen, setErrorOpen] = useState(false)
+    const [errorMessage, setErrorMessage] = useState("")
     
     const retrieveLocations = () => {
         LocationService.getAll()
@@ -47,31 +51,32 @@ const ModifiableLocationTable: React.FC = () => {
                 setLocations(response.data.items)
             })
             .catch((e: Error) => {
-                console.log(e)
+                setErrorMessage(e.message)
+                setErrorOpen(!errorOpen)
             })
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const handleDelete = (row: any) => {
-        console.log(row)
         LocationService.remove(row["@controls"].self.href)
             .then(() => {
                 retrieveLocations()
             })
             .catch((e: Error) => {
-                console.log(e)
+                setErrorMessage(e.message)
+                setErrorOpen(!errorOpen)
             })
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const handleModify = (row: any) => {
-        console.log(row)
         LocationService.update(row["@controls"].self.href, row.image_path, row.country_name, row.town_name, row.person_id)
             .then(() => {
                 retrieveLocations()
             })
             .catch((e: Error) => {
-                console.log(e)
+                setErrorMessage(e.message)
+                setErrorOpen(!errorOpen)
             })
     }
     const classes = useStyles()
@@ -148,6 +153,10 @@ const ModifiableLocationTable: React.FC = () => {
                 </Table>
             </TableContainer>
             {nextButton ? nextButton : noButton}
+            {errorOpen && 
+                <Alert severity="error" onClose={() => setErrorOpen(false)}>
+                    {errorMessage}
+                </Alert>}
         </>
     )
 }

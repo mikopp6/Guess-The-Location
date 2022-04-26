@@ -8,7 +8,6 @@ import Alert from "@mui/material/Alert"
 import { AxiosResponse } from "axios"
 import IPerson from "../types/Person"
 import PersonService from "../services/PersonService"
-import { Dialog } from "@mui/material"
 
 
 /**
@@ -25,6 +24,7 @@ const LogInCard: React.FC = () => {
     const [persons, setPersons] = useState<Array<IPerson>>([])
     const [fetchIsDone, setFetchIsDone] = useState(false)
     const [errorOpen, setErrorOpen] = useState(false)
+    const [errorMessage, setErrorMessage] = useState("")
 
     const navigate = useNavigate()
 
@@ -45,6 +45,7 @@ const LogInCard: React.FC = () => {
                     navigate("/admin")
                 }
             } else {
+                setErrorMessage("Wrong username or password!")
                 setErrorOpen(!errorOpen)
             }
         }
@@ -85,7 +86,10 @@ const LogInCard: React.FC = () => {
             <Button type="submit" variant="outlined" >
                 Log In
             </Button>
-            {errorOpen && <Alert severity="error" onClose={() => setErrorOpen(false)}>Wrong username or password!</Alert>}
+            {errorOpen && 
+                <Alert severity="error" onClose={() => setErrorOpen(false)}>
+                    {errorMessage}
+                </Alert>}
         </Box>
     )
 }

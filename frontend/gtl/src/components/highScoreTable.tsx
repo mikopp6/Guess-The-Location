@@ -10,6 +10,8 @@ import makeStyles from "@mui/styles/makeStyles"
 import NavigateNextIcon from "@mui/icons-material/NavigateNext"
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore"
 import { AxiosResponse } from "axios"
+import Alert from "@mui/material/Alert"
+
 
 import IGame from "../types/Game"
 import GameService from "../services/GameService"
@@ -40,13 +42,17 @@ const ScoreTable: React.FC = () => {
     }, [])
     const [games, setGames] = useState<Array<IGame>>([])
     const [listItems, setListItems] = useState(10)
+    const [errorOpen, setErrorOpen] = useState(false)
+    const [errorMessage, setErrorMessage] = useState("")
+
     const retrieveGames = () => {
         GameService.getAll()
             .then((response: AxiosResponse) => {
                 setGames(response.data.items)
             })
             .catch((e: Error) => {
-                console.log(e)
+                setErrorMessage(e.message)
+                setErrorOpen(!errorOpen)
             })
     }
     const classes = useStyles()
@@ -85,6 +91,10 @@ const ScoreTable: React.FC = () => {
                 </Table>
             </TableContainer>
             {nextButton ? nextButton : noButton}
+            {errorOpen && 
+                <Alert severity="error" onClose={() => setErrorOpen(false)}>
+                    {errorMessage}
+                </Alert>}
         </>
     )
 }
