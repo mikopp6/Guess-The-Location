@@ -63,7 +63,7 @@ const GamePage: React.FC = () => {
             <Container className="App">
                 <ThemeProvider theme={theme}>
                     <Container className="Home">
-                        <SaveGameModal/>
+                        <SaveGameModal correct={correct}/>
                     </Container>
                 </ThemeProvider>
             </Container>

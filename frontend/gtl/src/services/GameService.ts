@@ -6,9 +6,16 @@ const getAll = () => {
 // const get = (id: any) => {
 //   return http.get<ILocation>(`/locations/${id}`);
 // };
-// const create = (data: ILocation) => {
-//   return http.post<ILocation>("/locations", data);
-// };
+const create = (player_name: string, score: number, timestamp: string, game_type: number) => {
+    const data = {
+        "player_name": player_name,
+        "score": score,
+        "timestamp": timestamp,
+        "game_type": game_type
+    }
+    return http.post<string>("/games/", data)
+}
+
 const update = (url: string, player_name: string, score: number, timestamp: string, game_type: number) => {
     url = url.replace("/api", "")
     const data = {
@@ -33,7 +40,7 @@ const remove = (url: string) => {
 const GameService = {
     getAll,
     // get,
-    // create,
+    create,
     update,
     remove,
     // removeAll,
