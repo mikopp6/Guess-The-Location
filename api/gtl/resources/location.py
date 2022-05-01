@@ -37,8 +37,8 @@ class LocationCollection(Resource):
         body.add_namespace("gtl", "/api/link-relations/")
         body.add_control("self", url_for("api.locationcollection"))
         body.add_control_add_location()
-        body.add_control("persons-all", url_for("api.personcollection"))
-        body.add_control("games-all", url_for("api.gamecollection"))
+        body.add_control("gtl:persons-all", url_for("api.personcollection"))
+        body.add_control("gtl:games-all", url_for("api.gamecollection"))
         body["items"] = []
         for db_location in Location.query.all():
             item = GTLBuilder(db_location.serialize())
