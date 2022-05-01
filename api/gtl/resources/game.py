@@ -36,8 +36,8 @@ class GameCollection(Resource):
         body.add_namespace("gtl", "/api/link-relations/")
         body.add_control("self", url_for("api.gamecollection"))
         body.add_control_add_game()
-        body.add_control("locations-all", url_for("api.locationcollection"))
-        body.add_control("persons-all", url_for("api.personcollection"))
+        body.add_control("gtl:locations-all", url_for("api.locationcollection"))
+        body.add_control("gtl:persons-all", url_for("api.personcollection"))
         body.add_control(
             "alternate",
             url_for("api.statistic"),
