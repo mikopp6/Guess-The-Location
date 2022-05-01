@@ -39,18 +39,20 @@ paths:
                         description: 'Gamecollection sorted by score, in descending order'
                         href: /api/statistics/
                     items:
-                      - game_type: 2
-                        player_name: BBB
-                        score: 2891
-                        timestamp: '2022-03-15T15:12:41.988221'
-                      - game_type: 1
-                        player_name: AAA
-                        score: 6647
-                        timestamp: '2022-03-15T15:12:41.988221'
-                      - game_type: 3
-                        player_name: CCC
-                        score: 528
-                        timestamp: '2022-03-15T15:12:41.988221'
+                      - player_name: AAA
+                        score: 6354
+                        timestamp: '2022-04-26T09:35:14.463278'
+                        game_type: 1
+                        '@controls':
+                          self:
+                            href: /api/games/G73a9/
+                      - player_name: BBB
+                        score: 250
+                        timestamp: '2022-04-26T09:35:14.463278'
+                        game_type: 1
+                        '@controls':
+                          self:
+                            href: /api/games/A76L9/
       summary: ''
       tags:
         - GameCollection
@@ -63,10 +65,10 @@ paths:
           $ref: '#/components/responses/Created'
         '400':
           $ref: '#/components/responses/BadRequest'
-        '405':
-          $ref: '#/components/responses/MethodNowAllowed'
         '409':
           $ref: '#/components/responses/Conflict'
+        '415':
+          $ref: '#/components/responses/UnsupportedMediaType'
       description: Add new played game.
       tags:
         - GameCollection
@@ -98,11 +100,10 @@ paths:
               examples:
                 Example:
                   value:
-                    items:
-                      - player_name: BBB
-                        score: 2891
-                        timestamp: '2022-03-15T15:12:41.988221'
-                        game_type: 2
+                    player_name: BBB
+                    score: 2891
+                    timestamp: '2022-03-15T15:12:41.988221'
+                    game_type: 2
                     '@controls':
                       self:
                         href: '/api/games/{id}/'
@@ -173,11 +174,10 @@ paths:
               examples:
                 Example:
                   value:
-                    items:
-                      - image_path: church.jpg
-                        country_name: Russia
-                        town_name: Moscow
-                        person_id: 1
+                    image_path: church.jpg
+                    country_name: Russia
+                    town_name: Moscow
+                    person_id: 1
                     '@controls':
                       author:
                         href: '/api/persons/{id}/'
@@ -304,10 +304,10 @@ paths:
           $ref: '#/components/responses/Created'
         '400':
           $ref: '#/components/responses/BadRequest'
-        '405':
-          $ref: '#/components/responses/MethodNowAllowed'
         '409':
           $ref: '#/components/responses/Conflict'
+        '415':
+          $ref: '#/components/responses/UnsupportedMediaType'
       description: Add new LocationItem.
       tags:
         - LocationCollection
@@ -352,12 +352,17 @@ paths:
                             country_name: Finland
                             town_name: Oulu
                             person_id: 1
-                      - email: thisisnotmy@email.com
-                        password: exampleofanevenstrongerpasswordthisisnt
-                        locations: []
-                      - email: thisusedtobemy@email.com
-                        password: exampleofthestrongestpasswordintheworldthisisnt
-                        locations: []
+                            '@controls':
+                              self:
+                                href: /api/locations/G73a9/
+                          - image_path: buildings.jpg
+                            country_name: USA
+                            town_name: Boston
+                            person_id: 1
+                            …: null
+                        '@controls':
+                          self:
+                            href: /api/persons/G73a9/
       operationId: get-persons
       description: Get the list of persons.
       tags:
@@ -371,10 +376,10 @@ paths:
           $ref: '#/components/responses/Created'
         '400':
           $ref: '#/components/responses/BadRequest'
-        '405':
-          $ref: '#/components/responses/MethodNowAllowed'
         '409':
           $ref: '#/components/responses/Conflict'
+        '415':
+          $ref: '#/components/responses/UnsupportedMediaType'
       tags:
         - PersonCollection
       requestBody:
@@ -408,10 +413,9 @@ paths:
               examples:
                 Example:
                   value:
-                    items:
-                      - email: thisusedtobemy@email.com
-                        password: exampleofthestrongestpasswordintheworldthisisnt
-                        locations: []
+                    email: thisusedtobemy@email.com
+                    password: exampleofthestrongestpasswordintheworldthisisnt
+                    locations: []
                     '@controls':
                       self:
                         href: '/api/persons/{id}/'
@@ -612,6 +616,11 @@ components:
           examples:
             Example:
               value: No content
+      headers:
+        Location:
+          schema:
+            type: string
+          description: Link to the newly created resource
     UnsupportedMediaType:
       description: Example response
       content:
